@@ -14,7 +14,7 @@
   --font-sans: var(--font-geist-sans), Arial, sans-serif;
 }
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: 136px; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-tap-highlight-color: transparent; }
   body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); font-synthesis: none; }
   h1, h2, h3, p, figure { margin: 0; }
   a, button, summary { touch-action: manipulation; }
@@ -32,23 +32,76 @@
 .button-dark { color: white; background: var(--color-ink); }
 .button-dark:hover { background: var(--color-ink-500); }
 .button:disabled { opacity: .65; cursor: wait; }
-.site-header { position: sticky; top: 0; z-index: 50; background: #fff; border-bottom: 1px solid #dfe3e5; }
-.utility-bar { color: #e5e9ec; background: var(--color-ink); font-size: 11px; }
-.utility-bar > div { display: flex; align-items: center; justify-content: space-between; min-height: 32px; }
-.utility-bar span { display: inline-flex; align-items: center; gap: 8px; }
-.utility-bar .icon { color: var(--color-signal); width: 13px; height: 13px; }
-.nav-main { height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.brand-link { display: flex; align-items: center; min-height: 44px; }
-.nav-logo { width: 204px; height: auto; }
-.desktop-links { display: flex; gap: 27px; align-items: center; }
-.desktop-links a { display: flex; align-items: center; min-height: 44px; font-size: 13px; font-weight: 600; }
-.desktop-links a:hover { color: var(--color-signal-deep); }
-.nav-call { white-space: nowrap; font-size: 15px; }
-.menu-toggle { display: none; min-height: 44px; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
-.menu-toggle span { font-size: 23px; }
-.mobile-menu { position: absolute; inset: 100% 0 auto; max-height: calc(100svh - 180px); overflow-y: auto; overscroll-behavior: contain; background: white; box-shadow: 0 20px 30px #171b1e1f; padding: 12px 24px 24px; }
-.mobile-menu nav > a { display: flex; justify-content: space-between; align-items: center; min-height: 50px; border-bottom: 1px solid #dfe3e5; font-size: 16px; font-weight: 600; }
-.mobile-menu .mobile-menu-call { justify-content: flex-start; gap: 12px; margin-top: 10px; border: 0; color: var(--color-signal-deep); }
+/* ── Header — one white bar over the dark heroes ──
+   Its height is --nav-h (below): keep the two in step. No backdrop-filter
+   here — it would turn the header into the containing block for the fixed
+   mobile menu. */
+.site-header { position: sticky; top: 0; z-index: 50; background: #fff; color: var(--color-ink); border-bottom: 1px solid #dfe3e5; }
+.nav-main { height: 80px; display: flex; align-items: center; gap: 44px; }
+.brand-link { display: flex; align-items: center; min-height: 44px; flex-shrink: 0; }
+.nav-logo { width: 184px; height: auto; }
+.nav-links { display: flex; align-items: center; gap: 32px; margin: 0; padding: 0; list-style: none; }
+.nav-links a { position: relative; display: flex; align-items: center; min-height: 44px; font-size: 15px; font-weight: 600; letter-spacing: -.005em; color: var(--color-ink-500); transition: color 180ms; }
+/* The current page is marked like a lane dash, not a full underline. */
+.nav-links a::after { content: ""; position: absolute; left: 0; bottom: 4px; width: 18px; height: 3px; border-radius: 2px; background: rgb(23 27 30 / .22); transform: scaleX(0); transform-origin: 0 50%; transition: transform 240ms cubic-bezier(.2, .7, .2, 1); }
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--color-ink); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-links a[aria-current="page"]::after { transform: scaleX(1); background: var(--color-signal); }
+.nav-actions { position: relative; margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.nav-dispatch-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 14px 0 16px; border: 1px solid #d5dbdf; border-radius: 4px; color: var(--color-ink); font-size: 14px; font-weight: 600; white-space: nowrap; transition: border-color 180ms, background-color 180ms; }
+.nav-dispatch-toggle:hover, .nav-dispatch-toggle[aria-expanded="true"] { border-color: var(--color-signal); background: rgb(255 197 12 / .12); }
+.nav-dispatch-toggle .icon { width: 16px; height: 16px; color: #6b757c; transition: transform 240ms cubic-bezier(.2, .7, .2, 1); }
+.nav-dispatch-toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
+/* A steady "on" light, not a ping: the header is on screen the whole visit. */
+.nav-beacon { width: 8px; height: 8px; border-radius: 50%; background: var(--color-signal); box-shadow: 0 0 0 3px rgb(255 197 12 / .3); }
+.nav-call { min-height: 52px; gap: 11px; padding: 8px 20px 8px 16px; white-space: nowrap; }
+.nav-call .icon { width: 20px; height: 20px; }
+.nav-call > span { display: flex; flex-direction: column; font-size: 16px; font-weight: 750; line-height: 1.1; letter-spacing: -.015em; font-variant-numeric: tabular-nums; }
+.nav-call small { margin-bottom: 2px; font-size: 11px; font-weight: 600; letter-spacing: 0; color: rgb(23 27 30 / .72); }
+
+/* Dispatch board — the four offices as stops on a dashed centre line. */
+.dispatch-board { position: absolute; top: calc(100% + 22px); right: 0; width: 372px; padding: 20px 14px 16px; border-radius: 14px; background: #fff; border: 1px solid #e3e8eb; box-shadow: 0 30px 64px -24px rgb(23 27 30 / .38), 0 2px 6px rgb(23 27 30 / .06); transition: opacity 200ms, transform 260ms cubic-bezier(.2, .7, .2, 1); }
+@starting-style { .dispatch-board { opacity: 0; transform: translateY(-8px); } }
+.dispatch-board-title { padding-inline: 6px; font-size: 13px; font-weight: 600; color: #5f6a71; }
+.dispatch-route { position: relative; margin: 10px 0 0; padding: 0; list-style: none; }
+.dispatch-route::before { content: ""; position: absolute; left: 17px; top: 27px; bottom: 27px; width: 2px; background: repeating-linear-gradient(to bottom, var(--color-signal) 0 7px, transparent 7px 13px); }
+.dispatch-route a { position: relative; display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; min-height: 54px; padding: 0 8px 0 40px; border-radius: 10px; transition: background-color 180ms; }
+.dispatch-route a::before { content: ""; position: absolute; left: 11px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--color-signal); border: 2px solid var(--color-ink); }
+.dispatch-route-city { font-size: 15px; font-weight: 600; color: var(--color-ink); }
+.dispatch-route-number { font-size: 15px; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; color: var(--color-ink-500); transition: color 180ms; }
+.dispatch-route .icon { width: 30px; height: 30px; padding: 7px; border-radius: 50%; background: rgb(255 197 12 / .2); color: var(--color-signal-deep); transition: background-color 180ms, color 180ms; }
+.dispatch-route a:hover, .dispatch-route a:focus-visible { background: rgb(23 27 30 / .05); }
+.dispatch-route a:hover .dispatch-route-number, .dispatch-route a:focus-visible .dispatch-route-number { color: var(--color-signal-deep); }
+.dispatch-route a:hover .icon, .dispatch-route a:focus-visible .icon { background: var(--color-signal); color: var(--color-ink); }
+.dispatch-board-note { margin: 10px 6px 0; padding-top: 12px; border-top: 1px solid #e8ecee; font-size: 12px; color: #6b757c; }
+
+/* Mobile menu — the rest of the screen, in the hero's display type. */
+.menu-toggle { display: none; align-items: center; gap: 12px; min-height: 44px; padding: 0 2px 0 10px; color: var(--color-ink); font-size: 14px; font-weight: 600; }
+.menu-toggle-icon { position: relative; width: 22px; height: 14px; }
+.menu-toggle-icon > span { position: absolute; left: 0; right: 0; height: 2px; border-radius: 2px; background: currentColor; transition: top 240ms cubic-bezier(.2, .7, .2, 1), transform 240ms cubic-bezier(.2, .7, .2, 1); }
+.menu-toggle-icon > span:first-child { top: 2px; }
+.menu-toggle-icon > span:last-child { top: 10px; }
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon > span { top: 6px; }
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon > span:first-child { transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon > span:last-child { transform: rotate(-45deg); }
+.nav-locked { overflow: hidden; }
+.mobile-menu { position: fixed; inset: var(--nav-h) 0 0; overflow-y: auto; overscroll-behavior: contain; background: #fff; padding-bottom: calc(32px + env(safe-area-inset-bottom)); transition: opacity 220ms; }
+@starting-style { .mobile-menu { opacity: 0; } }
+.mobile-menu-links { margin: 0; padding: 10px 0 0; list-style: none; }
+.mobile-menu-links > li { transition: opacity 360ms ease, transform 480ms cubic-bezier(.2, .7, .2, 1); transition-delay: calc(var(--i) * 45ms + 40ms); }
+@starting-style { .mobile-menu-links > li { opacity: 0; transform: translateY(16px); } }
+.mobile-menu-links a { display: flex; align-items: center; justify-content: space-between; min-height: 76px; border-bottom: 1px solid #e6eaec; font-family: var(--font-display); font-variation-settings: "wdth" 84; font-size: clamp(34px, 9.4vw, 46px); font-weight: 800; letter-spacing: -.04em; color: var(--color-ink); }
+.mobile-menu-links a[aria-current="page"] { color: var(--color-signal-deep); }
+.mobile-menu-links .icon { width: 26px; height: 26px; color: #9aa4ab; transition: transform 200ms, color 200ms; }
+.mobile-menu-links a:hover .icon, .mobile-menu-links a:focus-visible .icon { color: var(--color-signal-deep); transform: translateX(4px); }
+.mobile-menu .dispatch-board-body { margin-top: 34px; padding: 18px 12px 14px; border-radius: 16px; background: var(--color-paper); border: 1px solid #e3e8eb; }
+/* Keeps "North Vancouver" on one line on a 360–420px phone. */
+@media (max-width: 420px) {
+  .mobile-menu .dispatch-board-body { padding-inline: 6px; }
+  .dispatch-route a { gap: 10px; padding-right: 6px; }
+  .dispatch-route-city, .dispatch-route-number { font-size: 14px; }
+  .dispatch-route .icon { width: 28px; height: 28px; padding: 6px; }
+}
 .availability { display: flex; align-items: center; gap: 9px; color: #f0d375; font-size: 12px; font-weight: 550; }
 .availability > span { width: 7px; height: 7px; border-radius: 50%; background: var(--color-signal); flex-shrink: 0; }
 .image-note { position: absolute; right: 12px; bottom: 8px; font-size: 9px; color: white; z-index: 2; background: #171b1ea6; padding: 3px 6px; border-radius: 2px; }
@@ -60,7 +113,7 @@
    covers the bottom. Both are subtracted, so the dispatch panel always lands
    exactly on the floor of the screen instead of under the call bar. Heights
    mirror the header rules below — keep them in step if the header changes. */
-:root { --nav-h: 121px; --bar-h: 0px; }
+:root { --nav-h: 81px; --bar-h: 0px; }
 .towing-hero { position: relative; background: var(--color-ink); color: #fff; }
 .hero-stage { position: relative; display: flex; flex-direction: column; min-height: max(620px, calc(100svh - var(--nav-h) - var(--bar-h))); overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; overflow: hidden; }
@@ -167,12 +220,12 @@
   .dispatch-glass-intro { grid-column: 1 / -1; padding: 8px 12px 4px; }
 }
 @media (max-width: 1023px) {
-  :root { --nav-h: 107px; --bar-h: calc(63px + env(safe-area-inset-bottom)); }
+  :root { --nav-h: 73px; --bar-h: calc(63px + env(safe-area-inset-bottom)); }
 }
 /* Mobile is its own composition: copy sits on the floor of the frame under a
    vertical scrim, and the crop shifts to hold the truck in the open middle. */
 @media (max-width: 900px) {
-  :root { --nav-h: 95px; }
+  :root { --nav-h: 65px; }
   /* The floor only guards against a collapsed hero in landscape. At 560px it
      was taller than the whole visible area of a 667px phone (509px once the
      header and call bar are out), forcing the panel under the bar. */
@@ -804,17 +857,21 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 
 @media (max-width: 1190px) {
   .site-container { width: calc(100% - 64px); }
-  .nav-main { gap: 20px; }
-  .desktop-links { gap: 18px; }
-  .nav-logo { width: 170px; }
-  .nav-call { padding-inline: 15px; font-size: 13px; }
+  .nav-main { gap: 28px; }
+  .nav-links { gap: 22px; }
+  .nav-logo { width: 164px; }
+  .nav-dispatch-toggle { padding-inline: 12px; }
+  .nav-call { padding-inline: 14px 16px; }
   .final-cta-image { margin-right: -32px; }
 }
 @media (max-width: 1023px) {
-  .desktop-links { display: none; }
-  .nav-call { margin-left: auto; }
+  /* The menu carries the links and the dispatch board; the call bar at the
+     foot of the screen carries the call. */
+  .nav-links, .nav-dispatch-toggle, .dispatch-board { display: none; }
   .menu-toggle { display: inline-flex; }
-  .nav-main { height: 74px; }
+  .nav-main { height: 72px; }
+  .nav-call { min-height: 46px; }
+  .nav-call small { display: none; }
   .service-help { align-items: flex-start; }
   .service-help > span { align-items: center; line-height: 1.8; }
   .footer-grid { gap: 35px; }
@@ -823,16 +880,12 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
   .mobile-call-bar a:last-child { background: var(--color-signal); border-color: var(--color-signal); color: var(--color-ink); }
   .mobile-call-bar .icon { width: 18px; height: 18px; }
   .site-footer { padding-bottom: calc(75px + env(safe-area-inset-bottom)); }
-  html { scroll-padding-top: 125px; scroll-padding-bottom: 85px; }
+  html { scroll-padding-bottom: 85px; }
 }
 @media (max-width: 900px) {
   .site-container { width: calc(100% - 40px); }
-  .utility-bar { font-size: 10px; }
-  .utility-bar > div { min-height: 28px; justify-content: center; }
-  .utility-bar span:last-child { display: none; }
-  .nav-main { height: 66px; gap: 15px; }
-  .nav-logo { width: 151px; }
-  .nav-call { display: none; }
+  .nav-main { height: 64px; gap: 16px; }
+  .nav-logo { width: 148px; }
   .availability { font-size: 11px; }
   .section-heading { display: block; margin-bottom: 30px; }
   .section-heading > p { margin-top: 18px; max-width: 49ch; font-size: 14px; }
@@ -874,9 +927,6 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .page-hero h1 { font-family: var(--font-display); font-variation-settings: "wdth" 86; font-size: clamp(35px, 4.5vw, 66px); font-weight: 800; line-height: 1.05; letter-spacing: -.045em; max-width: 17ch; text-wrap: balance; }
 .page-hero-lede { margin-top: 20px; max-width: 54ch; color: #ccd4d9; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.75; }
 
-/* Current page marker in the header. */
-.desktop-links a[aria-current="page"] { color: var(--color-signal-deep); box-shadow: inset 0 -2px 0 var(--color-signal); }
-.mobile-menu nav > a[aria-current="page"] { color: var(--color-signal-deep); }
 
 /* Fleet — alternating rows so four entries read as a walk down the yard
    rather than another card grid. */
@@ -986,6 +1036,7 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 
 @media (max-width: 600px) {
   .service-grid { grid-template-columns: 1fr; }
+  .nav-call { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
