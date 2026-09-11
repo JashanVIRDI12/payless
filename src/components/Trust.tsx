@@ -110,10 +110,10 @@ export default function Trust() {
         q(".why-corridor-stop").forEach((stop, index) => {
           corridor.fromTo(
             stop,
-            { scale: 0.55, backgroundColor: "#919ba2" },
+            { scale: 0.55, backgroundColor: "#7a8aa0" },
             {
               scale: 1,
-              backgroundColor: "#ffc50c",
+              backgroundColor: "#fc5000",
               duration: 0.14,
               ease: "back.out(1.8)",
             },

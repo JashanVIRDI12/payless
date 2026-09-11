@@ -45,7 +45,7 @@ export default function Hero() {
         intro
           // The photograph settles rather than arrives: one slow, weighted move.
           .fromTo(q(".hero-photo"), { scale: 1.16 }, { scale: 1, duration: 2, ease: "brandShort" }, 0)
-          // A single amber pass over the frame — a beacon sweeping the scene.
+          // A single orange pass over the frame — a beacon sweeping the scene.
           .fromTo(q(".hero-sweep"), { xPercent: -125, opacity: 0 }, { xPercent: 255, opacity: 1, duration: 1.55, ease: "none" }, 0.12)
           .to(q(".hero-sweep"), { opacity: 0, duration: 0.4, ease: "none" }, 1.3)
           .fromTo(q(".availability"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.75 }, 0.3);

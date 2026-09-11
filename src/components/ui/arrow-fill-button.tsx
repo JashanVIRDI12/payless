@@ -25,8 +25,8 @@ export type ArrowFillButtonProps = ArrowFillButtonOwnProps & Omit<ComponentProps
 
 export default function ArrowFillButton({
   btnText = "Call for assistance", href = "tel:+16049884176", className,
-  bgColor = "#FFC50C", textColor = "#171B1E", fillBgColor = "#171B1E",
-  fillTextColor = "#FFFFFF", hoverFillBgColor = "#171B1E", hoverFillTextColor = "#FFFFFF",
+  bgColor = "#FC5000", textColor = "#042054", fillBgColor = "#042054",
+  fillTextColor = "#FFFFFF", hoverFillBgColor = "#042054", hoverFillTextColor = "#FFFFFF",
   arrowColor, hoverArrowColor, animationDuration = 450, fillOnHover = true, style, ...props
 }: ArrowFillButtonProps) {
   const colors = {

@@ -1,28 +1,31 @@
 import Image from "next/image";
 import logo from "@/assets/brand/payless-logo.webp";
+import logoOnDark from "@/assets/brand/payless-logo-on-dark.webp";
 
 /**
- * The company's actual wordmark, taken from paylesstowing.ca — it is the mark
- * their own schema.org markup declares as the organization logo.
+ * Payless Towing lockup from the supplied brand PDF: navy-and-orange P-hook
+ * with wordmark and "Service & Recovery" tagline. The colour version sits on
+ * the white header; the reversed version (white + orange) sits on navy.
  *
- * Amber letters with a heavy black outline on transparency, so it reads on the
- * dark navigation and over the hero photograph alike. Both dimensions are set
- * in CSS (`h-* w-auto`) so Next does not warn about a single overridden axis.
+ * Both dimensions are set in CSS (`h-* w-auto` or a fixed width) so Next
+ * does not warn about a single overridden axis.
  */
 export default function Logo({
   className = "h-7 w-auto",
   priority = false,
+  onDark = false,
 }: {
   className?: string;
   priority?: boolean;
+  onDark?: boolean;
 }) {
   return (
     <Image
-      src={logo}
-      alt="Payless Auto Towing"
+      src={onDark ? logoOnDark : logo}
+      alt="Payless Towing"
       priority={priority}
       quality={92}
-      sizes="200px"
+      sizes="240px"
       className={className}
     />
   );

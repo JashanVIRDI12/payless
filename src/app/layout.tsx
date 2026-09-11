@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#042054",
   colorScheme: "light",
 };
 
@@ -68,6 +68,7 @@ const jsonLd = {
       name: COMPANY.legalName,
       alternateName: COMPANY.name,
       url: COMPANY.url,
+      logo: `${COMPANY.url}/payless-logo.webp`,
       telephone: PRIMARY.phone,
       description:
         "24-hour towing, recovery and roadside assistance throughout the Sea-to-Sky Corridor, from Deep Cove to Lillooet.",

@@ -81,8 +81,8 @@ export default function Nav() {
   return (
     <header className="site-header">
       <nav aria-label="Primary" className="nav-main site-container">
-        <Link href="/" aria-label="Payless Auto Towing home" className="brand-link">
-          <Logo className="nav-logo" />
+        <Link href="/" aria-label="Payless Towing home" className="brand-link">
+          <Logo className="nav-logo" priority />
         </Link>
 
         <ul className="nav-links">

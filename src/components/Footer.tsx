@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="site-container">
         <div className="footer-grid">
           <div>
-            <Link href="/" aria-label="Payless Auto Towing home" className="brand-link"><Logo className="footer-logo" /></Link>
+            <Link href="/" aria-label="Payless Towing home" className="brand-link"><Logo className="footer-logo" onDark /></Link>
             <p>Towing, recovery and roadside assistance.<br />Here for the Sea-to-Sky, day and night.</p>
           </div>
           <nav aria-label="Footer">

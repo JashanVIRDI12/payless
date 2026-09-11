@@ -8,7 +8,7 @@ import { prefersReducedMotion, registerGsap } from "@/lib/motion";
 type Variant = "signal" | "invert" | "outline";
 
 const VARIANTS: Record<Variant, string> = {
-  // Brand amber with near-black text — 11.9:1, and unmistakably the emergency action.
+  // Brand orange with navy text — the emergency action, taken from the logo.
   signal: "bg-signal text-ink hover:bg-signal-soft",
   invert: "bg-paper text-ink hover:bg-white",
   outline: "border border-current text-current hover:bg-current/10",
