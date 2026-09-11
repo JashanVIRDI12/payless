@@ -22,7 +22,6 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <p>© {new Date().getFullYear()} {COMPANY.legalName}</p>
-          <p>Concept towing imagery. Photos do not depict the actual Payless fleet.</p>
         </div>
       </div>
     </footer>

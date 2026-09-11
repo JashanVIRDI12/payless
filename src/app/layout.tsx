@@ -6,7 +6,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MobileCallBar from "@/components/MobileCallBar";
 import PageMotion from "@/components/PageMotion";
-import shareImage from "@/assets/images/hero-towing-v2.webp";
+import shareImage from "@/assets/images/photo-wrecker-towing-semi.webp";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: "Payless Auto Towing — 24/7 Towing & Roadside Assistance",
     description:
       "Professional towing and roadside assistance across North Vancouver, Squamish, Whistler and Pemberton.",
-    images: [{ url: shareImage.src, width: shareImage.width, height: shareImage.height, alt: "Payless Auto Towing — a yellow flat deck tow truck in the Sea-to-Sky Corridor" }],
+    images: [{ url: shareImage.src, width: shareImage.width, height: shareImage.height, alt: "Payless Auto Towing — a blue Payless heavy wrecker towing a white semi-truck" }],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },

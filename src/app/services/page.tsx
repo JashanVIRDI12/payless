@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import heroImage from "@/assets/images/heavy-towing-v2.webp";
+import heroImage from "@/assets/images/photo-orange-wrecker.webp";
 import PageHero from "@/components/PageHero";
 import ServiceGrid from "@/components/ServiceGrid";
 import HowItWorks from "@/components/HowItWorks";
@@ -23,8 +23,8 @@ export default function ServicesPage() {
         title="Whatever you're driving, whatever went wrong."
         lede="Six ways we help drivers and operators along Highway 99 — from a lock-out on the shoulder to a semi that needs lifting out of a lane."
         image={heroImage}
-        alt="A yellow heavy-duty wrecker coupled to a white semi tractor, snow-capped mountains behind"
-        position="52% 58%"
+        alt="An orange Payless heavy wrecker with a blue recovery boom, parked in front of a grey service building"
+        position="60% 20%"
       />
 
       <section className="services-section section-space" aria-labelledby="services-heading">

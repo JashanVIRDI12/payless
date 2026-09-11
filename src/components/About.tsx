@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import roadsideImage from "@/assets/images/roadside-v2.webp";
+import crewImage from "@/assets/images/photo-crew-rotator.webp";
 import Icon, { type IconName } from "./Icon";
 import { registerGsap, revealHeading } from "@/lib/motion";
 
@@ -161,14 +161,13 @@ export default function About() {
           <figure className="about-frame">
             <div className="about-frame-media">
               <Image
-                src={roadsideImage}
-                alt="A technician in a hi-vis jacket kneeling at the wheel of a grey pickup, a yellow flat deck tow truck waiting behind"
+                src={crewImage}
+                alt="Four Payless crew members standing beside a red heavy rotator wrecker inside a large service bay"
                 fill
                 sizes="(max-width: 900px) 100vw, 1320px"
                 quality={82}
               />
             </div>
-            <figcaption className="image-note">Illustrative imagery</figcaption>
           </figure>
 
           <div className="heritage-card">

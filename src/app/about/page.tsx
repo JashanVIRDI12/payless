@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import heroImage from "@/assets/images/long-haul-v2.webp";
+import heroImage from "@/assets/images/photo-red-payless-wrecker.webp";
 import PageHero from "@/components/PageHero";
 import About from "@/components/About";
 import Trust from "@/components/Trust";
@@ -22,8 +22,8 @@ export default function AboutPage() {
         title="We know this road in every season."
         lede={`Payless has worked the Sea-to-Sky between ${COMPANY.coverage} for decades — through black ice, washouts and the ordinary bad days that strand people a long way from home.`}
         image={heroImage}
-        alt="A yellow flat deck tow truck carrying a silver sedan along a coastal mountain highway"
-        position="50% 62%"
+        alt="A red Payless Towing heavy wrecker with a blue boom, parked on a snowy lot under a clear blue sky"
+        position="50% 68%"
       />
       <About />
       <Trust />

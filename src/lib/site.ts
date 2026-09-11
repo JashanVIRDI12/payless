@@ -3,12 +3,14 @@
  * no reviews, awards, certifications or response-time claims.
  */
 
-import svcRoadside from "@/assets/images/roadside-v2.webp";
-import svcLightMedium from "@/assets/images/hero-towing-v2.webp";
-import svcHeavyDuty from "@/assets/images/heavy-towing-v2.webp";
-import svcHeavyEquipment from "@/assets/images/equipment-v2.webp";
-import svcLongHaul from "@/assets/images/long-haul-v2.webp";
-import svcCleanup from "@/assets/images/recovery-v2.webp";
+// Owner-supplied photographs of Payless equipment — the only imagery used.
+import photoRedRotator from "@/assets/images/photo-red-rotator.webp";
+import photoCrew from "@/assets/images/photo-crew-rotator.webp";
+import photoHeavyWrecker from "@/assets/images/photo-white-heavy-wrecker.webp";
+import photoTankHaul from "@/assets/images/photo-lowboy-tank-dusk.webp";
+import photoHighwayHaul from "@/assets/images/photo-lowboy-highway-dawn.webp";
+import photoRecovery from "@/assets/images/photo-winter-crane-recovery.webp";
+import photoSemiOnTrailer from "@/assets/images/photo-semi-on-trailer.webp";
 import type { StaticImageData } from "next/image";
 
 export const COMPANY = {
@@ -85,9 +87,9 @@ export const SERVICES: readonly Service[] = [
     description:
       "A breakdown or lock-out can interrupt any trip. Reach our team day or night for roadside assistance and help getting your vehicle moving again.",
     details: ["24-hour emergency assistance", "Vehicle lock-out service", "Breakdown and recovery support"],
-    image: svcRoadside,
-    imagePosition: "82% 50%",
-    alt: "A technician in a hi-vis jacket kneeling at the wheel of a grey pickup, a yellow flat deck tow truck waiting behind on a wet coastal pull-out",
+    image: photoRedRotator,
+    imagePosition: "55% 50%",
+    alt: "A red heavy rotator wrecker with its boom raised, on display at an indoor truck show",
   },
   {
     id: "light-medium",
@@ -96,9 +98,9 @@ export const SERVICES: readonly Service[] = [
     description:
       "Flat-deck towing for everyday vehicles and commercial vans. Tell dispatch what you drive, its condition and where it needs to go.",
     details: ["Cars, SUVs and luxury vehicles", "Mid-size commercial vans", "Flat-deck vehicle transport"],
-    image: svcLightMedium,
-    imagePosition: "66% 50%",
-    alt: "A yellow flat deck tow truck carrying a dark SUV at a Sea-to-Sky viewpoint, snow-capped peaks across the water behind",
+    image: photoSemiOnTrailer,
+    imagePosition: "45% 50%",
+    alt: "A black semi-tractor chained down on a low-deck trailer in a snowy yard, a heavy wrecker parked behind",
   },
   {
     id: "heavy-duty",
@@ -107,9 +109,9 @@ export const SERVICES: readonly Service[] = [
     description:
       "Larger vehicles need the right equipment and experienced operators. Our heavy-duty team handles towing and recovery for commercial vehicles along the corridor.",
     details: ["Semi-trucks and buses", "Commercial vehicle recovery", "Operators trained for heavy work"],
-    image: svcHeavyDuty,
-    imagePosition: "0% 50%",
-    alt: "A yellow heavy-duty wrecker with its recovery boom raised, snow-capped mountains behind",
+    image: photoHeavyWrecker,
+    imagePosition: "12% 50%",
+    alt: "A white heavy-duty wrecker with blue fenders and a chrome bumper, parked in a truck yard",
   },
   {
     id: "heavy-equipment",
@@ -118,9 +120,9 @@ export const SERVICES: readonly Service[] = [
     description:
       "Move machinery and oversized loads across the Sea-to-Sky. Share the load dimensions and site access details so dispatch can help plan the transport.",
     details: ["Heavy machinery and equipment", "Oversized load transport", "Flat-deck hauling across the corridor"],
-    image: svcHeavyEquipment,
-    imagePosition: "78% 50%",
-    alt: "A yellow tractor unit with an excavator chained down to its lowboy trailer, water and snow-capped peaks behind",
+    image: photoTankHaul,
+    imagePosition: "45% 50%",
+    alt: "A white semi hauling a stainless-steel tank on a low-deck trailer at dusk, a heavy wrecker lit up behind it",
   },
   {
     id: "long-haul",
@@ -129,9 +131,9 @@ export const SERVICES: readonly Service[] = [
     description:
       "Need to move a vehicle further afield? Talk to dispatch about transport from Deep Cove to Lillooet and destinations beyond the local corridor.",
     details: ["Long-distance vehicle transport", "Moves beyond the Sea-to-Sky", "Discuss your pickup and destination"],
-    image: svcLongHaul,
-    imagePosition: "55% 50%",
-    alt: "A yellow flat deck tow truck carrying a silver sedan along a coastal mountain highway",
+    image: photoHighwayHaul,
+    imagePosition: "35% 50%",
+    alt: "A white semi hauling a second semi-tractor on a low-deck trailer along a highway at sunrise",
   },
   {
     id: "cleanup",
@@ -140,9 +142,9 @@ export const SERVICES: readonly Service[] = [
     description:
       "Support for large accidents and freight clean-up, with lane control held at the scene. Share your location and describe the vehicles and load involved.",
     details: ["Accident scene recovery", "Freight and debris clean-up", "Lane control at the scene"],
-    image: svcCleanup,
-    imagePosition: "85% 50%",
-    alt: "A crew in hi-vis clearing debris beside a damaged SUV, a yellow heavy wrecker and traffic cones holding the lane",
+    image: photoRecovery,
+    imagePosition: "0% 50%",
+    alt: "A white Payless Towing & Recovery heavy wrecker towing a crane truck across a snowy yard, a crew member in hi-vis standing by",
   },
 ] as const;
 
@@ -232,6 +234,8 @@ export type FleetUnit = {
   handles: readonly string[];
   image: StaticImageData;
   alt: string;
+  /** object-position for the cover crop; centred when omitted. */
+  imagePosition?: string;
 };
 
 /**
@@ -246,8 +250,8 @@ export const FLEET: readonly FleetUnit[] = [
     summary:
       "The default for anything that should not touch the road on the way — low clearance, all-wheel drive, electric, or simply worth keeping off its own wheels.",
     handles: ["Family cars", "Luxury vehicles", "AWD and electric", "Long-distance moves"],
-    image: svcLightMedium,
-    alt: "A yellow flat deck tow truck carrying a dark SUV at a Sea-to-Sky viewpoint, snow-capped peaks across the water behind",
+    image: photoHighwayHaul,
+    alt: "A white semi hauling a second semi-tractor on a low-deck trailer along a highway at sunrise",
   },
   {
     id: "roadside",
@@ -255,8 +259,10 @@ export const FLEET: readonly FleetUnit[] = [
     summary:
       "The unit that reaches you first for the problems that do not need a tow at all — a lock-out, a flat, a battery, or a vehicle that needs help getting clear of the lane.",
     handles: ["Lock-outs", "Wheel changes", "Battery help", "Recovery on scene"],
-    image: svcRoadside,
-    alt: "A technician in a hi-vis jacket kneeling at the wheel of a grey pickup, a yellow flat deck tow truck waiting behind on a wet coastal pull-out",
+    image: photoCrew,
+    // Keeps the truck's grille in the 5:4 stage; the crew stands mid-frame.
+    imagePosition: "0% 50%",
+    alt: "Four Payless crew members standing beside a red heavy rotator wrecker inside a large service bay",
   },
   {
     id: "heavy-wrecker",
@@ -264,8 +270,8 @@ export const FLEET: readonly FleetUnit[] = [
     summary:
       "For commercial units and recoveries that need real lifting capacity, worked by operators trained for heavy jobs and the lane control that comes with them.",
     handles: ["Semis and tractors", "Buses", "Commercial units", "Difficult recoveries"],
-    image: svcHeavyDuty,
-    alt: "A yellow heavy-duty wrecker coupled to a white semi tractor, snow-capped mountains behind",
+    image: photoHeavyWrecker,
+    alt: "A white heavy-duty wrecker with blue fenders and a chrome bumper, parked in a truck yard",
   },
   {
     id: "equipment-float",
@@ -273,7 +279,7 @@ export const FLEET: readonly FleetUnit[] = [
     summary:
       "Low-deck transport for machinery and oversized loads moving to and from site anywhere along the corridor.",
     handles: ["Excavators and loaders", "Oversized loads", "Site-to-site moves", "Freight"],
-    image: svcHeavyEquipment,
-    alt: "A yellow tractor unit with an excavator chained down to its lowboy trailer, water and snow-capped peaks behind",
+    image: photoSemiOnTrailer,
+    alt: "A black semi-tractor chained down on a low-deck trailer in a snowy yard, a heavy wrecker parked behind",
   },
 ] as const;

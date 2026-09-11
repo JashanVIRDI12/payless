@@ -42,7 +42,6 @@ export default function PageHero({
         <h1 id="page-heading">{title}</h1>
         <p className="page-hero-lede">{lede}</p>
       </div>
-      <p className="image-note">Illustrative imagery</p>
     </section>
   );
 }

@@ -234,8 +234,7 @@ export default function FleetShowroom() {
                 aria-labelledby={`${unit.id}-name`}
               >
                 <div className="unit-media-mobile">
-                  <Image src={unit.image} alt={unit.alt} fill sizes="100vw" quality={78} />
-                  <span className="image-note">Illustrative imagery</span>
+                  <Image src={unit.image} alt={unit.alt} fill sizes="100vw" quality={78} style={{ objectPosition: unit.imagePosition }} />
                 </div>
                 <p className="unit-count">
                   {pad(i + 1)} <span>/ {pad(FLEET.length)}</span>
@@ -274,6 +273,7 @@ export default function FleetShowroom() {
                       fill
                       sizes="(max-width: 1023px) 0px, 58vw"
                       quality={80}
+                      style={{ objectPosition: unit.imagePosition }}
                     />
                   </div>
                 ))}
@@ -299,8 +299,6 @@ export default function FleetShowroom() {
                     />
                   ))}
                 </nav>
-
-                <span className="image-note">Illustrative imagery</span>
               </div>
             </div>
           </div>

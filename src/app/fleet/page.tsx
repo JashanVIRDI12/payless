@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import heroImage from "@/assets/images/equipment-v2.webp";
+import heroImage from "@/assets/images/photo-red-rotator.webp";
 import PageHero from "@/components/PageHero";
 import FleetShowroom from "@/components/FleetShowroom";
 import FinalCta from "@/components/FinalCta";
@@ -22,8 +22,8 @@ export default function FleetPage() {
         title="The right truck for the job."
         lede="Sending the wrong equipment costs everyone time. Here is what we run, and the kind of work each one is built for."
         image={heroImage}
-        alt="A yellow tractor unit with an excavator chained down to its lowboy trailer, water and snow-capped peaks behind"
-        position="55% 55%"
+        alt="A red heavy rotator wrecker with its boom raised, on display at an indoor truck show"
+        position="60% 60%"
       />
 
       <FleetShowroom />

@@ -104,7 +104,6 @@
 }
 .availability { display: flex; align-items: center; gap: 9px; color: #f0d375; font-size: 12px; font-weight: 550; }
 .availability > span { width: 7px; height: 7px; border-radius: 50%; background: var(--color-signal); flex-shrink: 0; }
-.image-note { position: absolute; right: 12px; bottom: 8px; font-size: 9px; color: white; z-index: 2; background: #171b1ea6; padding: 3px 6px; border-radius: 2px; }
 /* Hero — one full-bleed photograph with the copy held over a directional scrim,
    so the truck stays legible to the right of the headline.
 
@@ -140,8 +139,6 @@
    the digits. The blur is kept to one moderate-sized panel: backdrop-filter is
    recomputed every frame the photograph behind it moves. */
 .hero-dispatch { position: relative; z-index: 2; padding-bottom: clamp(20px, 3.4vh, 40px); }
-/* The dispatch panel owns the floor of the frame, so the disclosure moves up. */
-.towing-hero .image-note { top: 12px; bottom: auto; }
 .dispatch-glass {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) repeat(4, minmax(0, 1fr));
@@ -230,7 +227,8 @@
      was taller than the whole visible area of a 667px phone (509px once the
      header and call bar are out), forcing the panel under the bar. */
   .hero-stage { min-height: max(460px, calc(100svh - var(--nav-h) - var(--bar-h))); }
-  .hero-photo { object-position: 58% 44%; }
+  /* Holds the wrecker's cab in the narrow portrait slice of the photo. */
+  .hero-photo { object-position: 77% 50%; }
   .hero-scrim { background: linear-gradient(180deg, #0b0f12d1 0%, #0b0f1259 22%, #0b0f1240 40%, #0b0f12de 66%, #0b0f12fa 100%); }
   .hero-inner { justify-content: flex-end; padding-block: 28px 22px; }
   .hero-title { font-size: clamp(37px, 10.2vw, 58px); margin-top: 18px; }
@@ -472,8 +470,7 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .about-window { position: relative; margin-bottom: 44px; }
 .about-frame { position: relative; overflow: hidden; aspect-ratio: 2 / 1; border-radius: 26px; background: var(--color-ink); }
 .about-frame-media { position: absolute; inset: 0; will-change: transform; }
-.about-frame-media img { object-fit: cover; object-position: 50% 58%; }
-.about-frame .image-note { top: 14px; right: 14px; bottom: auto; }
+.about-frame-media img { object-fit: cover; object-position: 50% 62%; }
 .heritage-card { position: absolute; left: clamp(20px, 3vw, 44px); bottom: -44px; z-index: 2; padding: clamp(20px, 2vw, 28px) clamp(22px, 2.3vw, 32px); border-radius: 18px; background: var(--color-signal); color: var(--color-ink); box-shadow: 0 24px 44px -24px rgb(23 27 30 / .55); }
 .heritage-card strong { display: block; font-family: var(--font-display); font-variation-settings: "wdth" 86; font-size: clamp(22px, 2.2vw, 32px); font-weight: 800; line-height: 1.04; letter-spacing: -.035em; }
 .heritage-card span { display: block; margin-top: 10px; font-size: 12px; font-weight: 600; color: rgb(23 27 30 / .78); }
@@ -513,7 +510,7 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
   .about-heading { align-items: flex-start; }
   .about-intro p { font-size: 14px; }
   .about-frame { aspect-ratio: 4 / 3; border-radius: 18px; }
-  .about-frame-media img { object-position: 56% 55%; }
+  .about-frame-media img { object-position: 50% 60%; }
   .about-window { margin-bottom: 36px; }
   .heritage-card { left: 16px; right: 16px; bottom: -36px; padding: 18px 20px; border-radius: 14px; }
   .heritage-card strong { font-size: 22px; }
@@ -647,7 +644,7 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .final-cta h2 + p { margin: 22px 0 30px; color: #c4cbd0; font-size: 15px; line-height: 1.8; }
 .final-local { display: flex; align-items: center; gap: 12px; font-size: 12px; min-height: 44px; margin-top: 9px; width: fit-content; }
 .final-cta-image { position: relative; margin-right: calc(-1 * max(48px, (100vw - 1320px) / 2)); }
-.final-cta-image img { object-fit: cover; object-position: 68% center; }
+.final-cta-image img { object-fit: cover; object-position: 85% center; }
 .site-footer { background: var(--color-ink); color: #cad2d7; padding-top: 54px; border-top: 1px solid #ffffff14; }
 .footer-grid { display: grid; grid-template-columns: 1.2fr .6fr 1fr; gap: 70px; padding-bottom: 40px; }
 .footer-logo { width: 218px; height: auto; }
@@ -907,7 +904,7 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
   .final-cta-grid > div:first-child { padding-block: 45px 30px; }
   .final-cta h2 { font-size: 36px; }
   .final-cta-image { height: 270px; margin-inline: -20px; }
-  .final-cta-image img { object-position: 65% 55%; }
+  .final-cta-image img { object-position: 70% 55%; }
   .footer-grid { grid-template-columns: .65fr 1fr; gap: 32px 30px; padding-bottom: 30px; }
   .footer-grid > div { grid-column: 1 / -1; }
   .footer-logo { width: 190px; }
@@ -986,7 +983,6 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .stage-progress a::before { content: ""; position: absolute; left: 3px; right: 3px; top: 8px; height: 4px; border-radius: 4px; background: rgb(255 255 255 / .38); transition: background-color 300ms, left 300ms, right 300ms; }
 .stage-progress a.is-active::before { background: var(--color-signal); left: 0; right: 0; }
 .stage-progress a:hover::before { background: rgb(255 255 255 / .75); }
-.stage-frame .image-note { top: 14px; right: 14px; bottom: auto; z-index: 11; }
 
 /* flow-root stops the help box's top margin collapsing through this section:
    it was pushing the whole section down and leaving a 44–66px strip of the
@@ -1007,7 +1003,6 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
   .unit-panel { min-height: 0; padding-block: 32px; }
   .unit-media-mobile { position: relative; display: block; aspect-ratio: 16 / 10; margin-bottom: 24px; overflow: hidden; border-radius: 18px; background: #dce1e4; }
   .unit-media-mobile img { object-fit: cover; }
-  .unit-media-mobile .image-note { top: 10px; right: 10px; bottom: auto; }
   .unit-panel h3 { font-size: clamp(32px, 6.4vw, 48px); }
   .unit-summary { font-size: 15px; }
   [data-anim] .unit-media-mobile { clip-path: inset(0% 0% 100% 0% round 18px); }

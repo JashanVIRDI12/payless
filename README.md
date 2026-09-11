@@ -60,4 +60,4 @@ Worth knowing:
 - [CREDITS.md](CREDITS.md): image provenance and the current asset map.
 - [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md): full prompts used for the six new generated assets.
 
-Images are local optimized WebP concept illustrations. The page labels them as illustrative, and they should eventually be replaced by approved photographs of the actual fleet.
+Every image on the site is an owner-supplied photograph of Payless trucks and crew, optimized to WebP. The earlier AI concept illustrations are retired. CREDITS.md maps every asset to where it is used.

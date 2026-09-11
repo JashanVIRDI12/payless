@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import heroImage from "@/assets/images/hero-towing-v2.webp";
+import heroImage from "@/assets/images/photo-wrecker-towing-semi.webp";
 import { LOCATIONS, PRIMARY } from "@/lib/site";
 import { EASE, registerGsap, releaseWords, stageLines } from "@/lib/motion";
 import Link from "next/link";
@@ -103,7 +103,7 @@ export default function Hero() {
           <div className="hero-bg-layer">
             <Image
               src={heroImage}
-              alt="A yellow flat deck tow truck carrying a dark SUV at a Sea-to-Sky viewpoint, snow-capped peaks across the water behind"
+              alt="A blue Payless heavy wrecker with orange and white stripes towing a white semi-truck along a gravel roadside"
               fill
               sizes="100vw"
               quality={75}
@@ -158,8 +158,6 @@ export default function Hero() {
             ))}
           </div>
         </div>
-
-        <p className="image-note">Illustrative imagery</p>
       </div>
     </section>
   );

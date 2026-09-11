@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import heroImage from "@/assets/images/recovery-v2.webp";
+import heroImage from "@/assets/images/photo-semi-on-trailer.webp";
 import PageHero from "@/components/PageHero";
 import Locations from "@/components/Locations";
 import Contact from "@/components/Contact";
@@ -22,8 +22,8 @@ export default function ContactPage() {
         title="Call the dispatch nearest you."
         lede={`Four offices cover the corridor from ${COMPANY.coverage}. For anything urgent, phone is fastest — someone answers whatever the hour.`}
         image={heroImage}
-        alt="A crew in hi-vis clearing debris beside a damaged SUV, a yellow heavy wrecker and traffic cones holding the lane"
-        position="50% 56%"
+        alt="A black semi-tractor chained down on a low-deck trailer in a snowy yard, a heavy wrecker parked behind"
+        position="60% 43%"
       />
       <Locations />
       <Contact enabled={Boolean(process.env.CONTACT_WEBHOOK_URL)} />
