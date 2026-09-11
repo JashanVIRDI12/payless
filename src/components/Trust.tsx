@@ -41,10 +41,14 @@ export default function Trust() {
             { opacity: 1, y: 0, duration: 0.55 },
             0,
           )
+          // GSAP reads the CSS anti-flash translateY(112%) as a pixel `y`;
+          // zero it so only yPercent carries the offset, or the words finish
+          // the tween still parked below their masks.
           .fromTo(
             q(".why-title-word"),
-            { yPercent: 112, rotation: 4, transformOrigin: "0% 100%" },
+            { y: 0, yPercent: 112, rotation: 4, transformOrigin: "0% 100%" },
             {
+              y: 0,
               yPercent: 0,
               rotation: 0,
               duration: compact ? 0.8 : 1.05,
