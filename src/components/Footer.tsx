@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { COMPANY, LOCATIONS, NAV_LINKS } from "@/lib/site";
+import { COMPANY, NAV_LINKS, PRIMARY } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <Link href="/" aria-label="Payless Towing home" className="brand-link"><Logo className="footer-logo" onDark /></Link>
-            <p>Towing, recovery and roadside assistance.<br />Here for the Sea-to-Sky, day and night.</p>
+            <p>Towing, recovery and roadside assistance.<br />Here for Edmonton, day and night.</p>
           </div>
           <nav aria-label="Footer">
             <h2>Explore</h2>
@@ -17,7 +17,7 @@ export default function Footer() {
           </nav>
           <nav aria-label="Dispatch telephone numbers">
             <h2>24/7 dispatch</h2>
-            {LOCATIONS.map((location) => <a className="footer-dispatch" key={location.city} href={`tel:${location.tel}`}><span>{location.city}</span><span>{location.phone}</span></a>)}
+            <a className="footer-dispatch" href={`tel:${PRIMARY.tel}`}><span>{PRIMARY.city}</span><span>{PRIMARY.phone}</span></a>
           </nav>
         </div>
         <div className="footer-bottom">

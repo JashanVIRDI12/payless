@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Geist } from "next/font/google";
 import "./globals.css";
-import { COMPANY, LOCATIONS, PRIMARY, SERVICES } from "@/lib/site";
+import { COMPANY, PRIMARY, SERVICES } from "@/lib/site";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import MobileCallBar from "@/components/MobileCallBar";
@@ -25,19 +25,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(COMPANY.url),
   title: {
     default:
-      "Payless Auto Towing — 24/7 Towing & Roadside Assistance | Sea-to-Sky, BC",
-    template: "%s | Payless Auto Towing",
+      "Payless Towing — 24/7 Towing, Recovery & Roadside Support | Edmonton, AB",
+    template: "%s | Payless Towing",
   },
   description:
-    "24-hour towing, recovery and roadside assistance across North Vancouver, Squamish, Whistler and Pemberton. Serving the Sea-to-Sky Corridor since the 1970s.",
+    "24/7 towing, recovery and roadside assistance across Edmonton and surrounding areas. Heavy-duty wreckers, equipment transport and long-distance towing.",
   keywords: [
-    "towing North Vancouver",
-    "Squamish towing",
-    "Whistler towing",
-    "Pemberton towing",
-    "24 hour roadside assistance BC",
-    "heavy duty towing Sea-to-Sky",
-    "flat deck transport British Columbia",
+    "towing Edmonton",
+    "heavy duty towing Edmonton",
+    "24 hour roadside assistance Edmonton",
+    "accident recovery Alberta",
+    "heavy equipment transport Edmonton",
+    "long distance towing Alberta",
+    "Landoll trailer transport",
   ],
   alternates: { canonical: "/" },
   openGraph: {
@@ -45,10 +45,10 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: COMPANY.url,
     siteName: COMPANY.legalName,
-    title: "Payless Auto Towing — 24/7 Towing & Roadside Assistance",
+    title: "Payless Towing — 24/7 Towing, Recovery & Roadside Support",
     description:
-      "Professional towing and roadside assistance across North Vancouver, Squamish, Whistler and Pemberton.",
-    images: [{ url: shareImage.src, width: shareImage.width, height: shareImage.height, alt: "Payless Auto Towing — a blue Payless heavy wrecker towing a white semi-truck" }],
+      "Towing, recovery, roadside assistance and specialized transport across Edmonton and surrounding areas.",
+    images: [{ url: shareImage.src, width: shareImage.width, height: shareImage.height, alt: "Payless Towing — a blue Payless heavy wrecker towing a white semi-truck" }],
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
@@ -71,11 +71,14 @@ const jsonLd = {
       logo: `${COMPANY.url}/payless-logo.webp`,
       telephone: PRIMARY.phone,
       description:
-        "24-hour towing, recovery and roadside assistance throughout the Sea-to-Sky Corridor, from Deep Cove to Lillooet.",
-      areaServed: LOCATIONS.map((l) => ({
-        "@type": "City",
-        name: l.city,
-      })),
+        "24/7 towing, recovery, roadside assistance and specialized transport across Edmonton and surrounding areas, with long-distance towing available.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: COMPANY.city,
+        addressRegion: "AB",
+        addressCountry: "CA",
+      },
+      areaServed: { "@type": "City", name: COMPANY.city },
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: [
@@ -99,21 +102,6 @@ const jsonLd = {
         })),
       },
     },
-    ...LOCATIONS.map((l) => ({
-      "@type": "AutoRepair",
-      "@id": `${COMPANY.url}/#${l.city.toLowerCase().replace(/\s+/g, "-")}`,
-      name: `${COMPANY.legalName} — ${l.city}`,
-      parentOrganization: { "@id": `${COMPANY.url}/#business` },
-      telephone: l.phone,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: l.street,
-        addressLocality: l.city,
-        addressRegion: "BC",
-        postalCode: l.postal,
-        addressCountry: "CA",
-      },
-    })),
   ],
 };
 

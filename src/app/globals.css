@@ -48,33 +48,12 @@
 .nav-links a:hover::after { transform: scaleX(1); }
 .nav-links a[aria-current="page"]::after { transform: scaleX(1); background: var(--color-signal); }
 .nav-actions { position: relative; margin-left: auto; display: flex; align-items: center; gap: 12px; }
-.nav-dispatch-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 14px 0 16px; border: 1px solid #d5dbdf; border-radius: 4px; color: var(--color-ink); font-size: 14px; font-weight: 600; white-space: nowrap; transition: border-color 180ms, background-color 180ms; }
-.nav-dispatch-toggle:hover, .nav-dispatch-toggle[aria-expanded="true"] { border-color: var(--color-signal); background: rgb(252 80 0 / .12); }
-.nav-dispatch-toggle .icon { width: 16px; height: 16px; color: #6b757c; transition: transform 240ms cubic-bezier(.2, .7, .2, 1); }
-.nav-dispatch-toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
 /* A steady "on" light, not a ping: the header is on screen the whole visit. */
 .nav-beacon { width: 8px; height: 8px; border-radius: 50%; background: var(--color-signal); box-shadow: 0 0 0 3px rgb(252 80 0 / .3); }
 .nav-call { min-height: 52px; gap: 11px; padding: 8px 20px 8px 16px; white-space: nowrap; }
 .nav-call .icon { width: 20px; height: 20px; }
 .nav-call > span { display: flex; flex-direction: column; font-size: 16px; font-weight: 750; line-height: 1.1; letter-spacing: -.015em; font-variant-numeric: tabular-nums; }
 .nav-call small { margin-bottom: 2px; font-size: 11px; font-weight: 600; letter-spacing: 0; color: rgb(4 32 84 / .72); }
-
-/* Dispatch board — the four offices as stops on a dashed centre line. */
-.dispatch-board { position: absolute; top: calc(100% + 22px); right: 0; width: 372px; padding: 20px 14px 16px; border-radius: 14px; background: #fff; border: 1px solid #e3e8eb; box-shadow: 0 30px 64px -24px rgb(4 32 84 / .38), 0 2px 6px rgb(4 32 84 / .06); transition: opacity 200ms, transform 260ms cubic-bezier(.2, .7, .2, 1); }
-@starting-style { .dispatch-board { opacity: 0; transform: translateY(-8px); } }
-.dispatch-board-title { padding-inline: 6px; font-size: 13px; font-weight: 600; color: #5f6a71; }
-.dispatch-route { position: relative; margin: 10px 0 0; padding: 0; list-style: none; }
-.dispatch-route::before { content: ""; position: absolute; left: 17px; top: 27px; bottom: 27px; width: 2px; background: repeating-linear-gradient(to bottom, var(--color-signal) 0 7px, transparent 7px 13px); }
-.dispatch-route a { position: relative; display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 14px; min-height: 54px; padding: 0 8px 0 40px; border-radius: 10px; transition: background-color 180ms; }
-.dispatch-route a::before { content: ""; position: absolute; left: 11px; top: 50%; width: 14px; height: 14px; margin-top: -7px; border-radius: 50%; background: var(--color-signal); border: 2px solid var(--color-ink); }
-.dispatch-route-city { font-size: 15px; font-weight: 600; color: var(--color-ink); }
-.dispatch-route-number { font-size: 15px; font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; color: var(--color-ink-500); transition: color 180ms; }
-.dispatch-route .icon { width: 30px; height: 30px; padding: 7px; border-radius: 50%; background: rgb(252 80 0 / .2); color: var(--color-signal-deep); transition: background-color 180ms, color 180ms; }
-.dispatch-route a:hover, .dispatch-route a:focus-visible { background: rgb(4 32 84 / .05); }
-.dispatch-route a:hover .dispatch-route-number, .dispatch-route a:focus-visible .dispatch-route-number { color: var(--color-signal-deep); }
-.dispatch-route a:hover .icon, .dispatch-route a:focus-visible .icon { background: var(--color-signal); color: var(--color-ink); }
-.dispatch-board-note { margin: 10px 6px 0; padding-top: 12px; border-top: 1px solid #e8ecee; font-size: 12px; color: #6b757c; }
-
 /* Mobile menu — the rest of the screen, in the hero's display type. */
 .menu-toggle { display: none; align-items: center; gap: 12px; min-height: 44px; padding: 0 2px 0 10px; color: var(--color-ink); font-size: 14px; font-weight: 600; }
 .menu-toggle-icon { position: relative; width: 22px; height: 14px; }
@@ -94,14 +73,6 @@
 .mobile-menu-links a[aria-current="page"] { color: var(--color-signal-deep); }
 .mobile-menu-links .icon { width: 26px; height: 26px; color: #9aa4ab; transition: transform 200ms, color 200ms; }
 .mobile-menu-links a:hover .icon, .mobile-menu-links a:focus-visible .icon { color: var(--color-signal-deep); transform: translateX(4px); }
-.mobile-menu .dispatch-board-body { margin-top: 34px; padding: 18px 12px 14px; border-radius: 16px; background: var(--color-paper); border: 1px solid #e3e8eb; }
-/* Keeps "North Vancouver" on one line on a 360–420px phone. */
-@media (max-width: 420px) {
-  .mobile-menu .dispatch-board-body { padding-inline: 6px; }
-  .dispatch-route a { gap: 10px; padding-right: 6px; }
-  .dispatch-route-city, .dispatch-route-number { font-size: 14px; }
-  .dispatch-route .icon { width: 28px; height: 28px; padding: 6px; }
-}
 .availability { display: flex; align-items: center; gap: 9px; color: #ffb089; font-size: 12px; font-weight: 550; }
 .availability > span { width: 7px; height: 7px; border-radius: 50%; background: var(--color-signal); flex-shrink: 0; }
 /* Hero — one full-bleed photograph with the copy held over a directional scrim,
@@ -141,7 +112,7 @@
 .hero-dispatch { position: relative; z-index: 2; padding-bottom: clamp(20px, 3.4vh, 40px); }
 .dispatch-glass {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) repeat(4, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 8px;
   padding: 8px;
   border-radius: 20px;
@@ -203,18 +174,16 @@
    PageMotion's selectors — anything added there needs adding here. */
 [data-anim] :is(.section-heading h2, .page-hero h1) { visibility: hidden; }
 [data-anim] :is(
-  .service-grid > li, .stop-card, .faq-list details,
+  .service-grid > li, .faq-list details,
   .section-heading > p, .section-kicker, .check-list,
   .text-call, .contact-urgent, .fleet-note, .service-help,
-  .reviews-source, .corridor-band, .page-hero-lede
+  .reviews-source, .page-hero-lede
 ) { opacity: 0; }
 [data-anim] .final-cta-image { clip-path: inset(13% 0% 13% 0% round 4px); }
 
 @media (max-width: 1190px) {
   .hero-title { font-size: clamp(40px, 6.4vw, 74px); }
-  /* The intro gets its own row; the four offices stay side by side. */
-  .dispatch-glass { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .dispatch-glass-intro { grid-column: 1 / -1; padding: 8px 12px 4px; }
+  .dispatch-glass { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 @media (max-width: 1023px) {
   :root { --nav-h: 81px; --bar-h: calc(63px + env(safe-area-inset-bottom)); }
@@ -236,7 +205,7 @@
   .hero-actions { margin-top: 24px; gap: 18px; }
   .hero-ghost { font-size: 13px; }
   .hero-dispatch { padding-bottom: 16px; }
-  .dispatch-glass { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 6px; border-radius: 16px; }
+  .dispatch-glass { grid-template-columns: 1fr; gap: 6px; padding: 6px; border-radius: 16px; }
   .dispatch-glass-intro { padding: 8px 10px 6px; gap: 12px; }
   .dispatch-glass-intro strong { font-size: 14px; }
   /* The tile is laid out, not overlaid: city and icon share the top row, the
@@ -454,9 +423,6 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .stack-chip svg { width: 18px; height: 18px; flex-shrink: 0; }
 .stack-tick { fill: none; stroke: var(--color-signal); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 
-.route-tip { display: flex; align-items: center; gap: 18px; margin-top: clamp(32px, 3.2vw, 48px); padding: 16px 22px 16px 16px; border-radius: 18px; background: rgb(252 80 0 / .08); border: 1px solid rgb(252 80 0 / .28); color: #dfe5e8; font-size: 14px; line-height: 1.6; }
-.route-tip strong { color: #fff; font-weight: 700; }
-.route-tip .route-shield { width: 36px; height: 42px; font-size: 16px; }
 
 /* ── About — an editorial spread with the photograph as a window ── */
 .about-section { background: #f4f6f6; }
@@ -486,7 +452,7 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .about-cta { white-space: nowrap; }
 
 /* Pre-paint holds — each section reveals from exactly these. */
-[data-anim] :is(.stack-num, .stack-icon, .stack-chip, .route-tip, .about-intro p, .heritage-card, .credential, .about-cta) { opacity: 0; }
+[data-anim] :is(.stack-num, .stack-icon, .stack-chip, .about-intro p, .heritage-card, .credential, .about-cta) { opacity: 0; }
 [data-anim] .about-frame { clip-path: inset(0% 32% 0% 32% round 26px); }
 
 @media (max-width: 1190px) {
@@ -505,7 +471,6 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
   .stack-main > p { font-size: 14px; }
   .stack-ready { padding: 18px; }
   .stack-chip { min-height: 38px; font-size: 13px; }
-  .route-tip { align-items: flex-start; font-size: 13px; }
 
   .about-heading { align-items: flex-start; }
   .about-intro p { font-size: 14px; }
@@ -524,92 +489,6 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .check-list .icon { color: #b83800; width: 18px; height: 18px; }
 .reviews-section { background: #fff; }
 .reviews-source { font-size: 12px; font-weight: 550; display: flex; align-items: center; gap: 12px; min-height: 44px; color: #5f6971; }
-/* ── Locations — the corridor as a route map ──
-   Stops and cards share four equal columns with no grid gap; the visual gap is
-   padding inside each column. That keeps every column centre at exactly
-   12.5 / 37.5 / 62.5 / 87.5%, which is where the road's path runs — so the
-   towns sit on the line at any width without measuring anything. */
-.corridor-section { background: #eceff1; }
-.corridor { --col-pad: clamp(6px, .8vw, 10px); }
-
-.corridor-band { position: relative; overflow: hidden; border-radius: 20px; background: var(--color-ink); color: #fff; padding: clamp(20px, 2.2vw, 30px) 0 clamp(26px, 2.8vw, 38px); }
-/* A faint lane texture so the band reads as tarmac, not a flat slab. */
-.corridor-band::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(90deg, transparent 0 46px, rgb(255 255 255 / .022) 46px 47px); }
-.corridor-legend { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-inline: clamp(20px, 2.4vw, 34px); }
-.route-shield { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 48px; border: 2px solid var(--color-signal); border-radius: 7px 7px 18px 18px; font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -.02em; color: var(--color-signal); flex-shrink: 0; }
-.corridor-caption { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #93a0a8; }
-
-.corridor-track { position: relative; margin-top: clamp(22px, 2.4vw, 34px); }
-.corridor-svg { position: absolute; left: 0; right: 0; top: 9px; width: 100%; height: 8px; overflow: visible; }
-.corridor-road-bed, .corridor-road { fill: none; stroke-width: 4; stroke-linecap: round; }
-.corridor-road-bed { stroke: rgb(255 255 255 / .12); }
-.corridor-road { stroke: var(--color-signal); }
-.corridor-stops { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); }
-.corridor-stops > li { display: flex; flex-direction: column; align-items: center; gap: 14px; padding-inline: var(--col-pad); text-align: center; }
-.corridor-node { position: relative; width: 26px; height: 26px; border-radius: 50%; background: var(--color-ink); border: 3px solid var(--color-signal); box-shadow: 0 0 0 6px var(--color-ink); transition: background-color 280ms, box-shadow 280ms, transform 280ms; }
-.corridor-node::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: var(--color-signal); opacity: .9; }
-.corridor-town { font-family: var(--font-display); font-variation-settings: "wdth" 88; font-size: clamp(13px, 1.15vw, 16px); font-weight: 750; letter-spacing: -.01em; color: #dfe5e8; transition: color 280ms; }
-
-/* Hovering or focusing a card lights its own town on the road and dims the
-   others. Pure CSS via :has() — explicit per stop, since there are only four. */
-.corridor:has(.stop-card:is(:hover, :focus-within)) .corridor-town { color: #6f7c84; }
-.corridor:has(.stop-card[data-stop="0"]:is(:hover, :focus-within)) [data-stop="0"] .corridor-node,
-.corridor:has(.stop-card[data-stop="1"]:is(:hover, :focus-within)) [data-stop="1"] .corridor-node,
-.corridor:has(.stop-card[data-stop="2"]:is(:hover, :focus-within)) [data-stop="2"] .corridor-node,
-.corridor:has(.stop-card[data-stop="3"]:is(:hover, :focus-within)) [data-stop="3"] .corridor-node {
-  transform: scale(1.22);
-  background: var(--color-signal);
-  box-shadow: 0 0 0 6px var(--color-ink), 0 0 0 15px rgb(252 80 0 / .26);
-}
-.corridor:has(.stop-card[data-stop="0"]:is(:hover, :focus-within)) [data-stop="0"] .corridor-town,
-.corridor:has(.stop-card[data-stop="1"]:is(:hover, :focus-within)) [data-stop="1"] .corridor-town,
-.corridor:has(.stop-card[data-stop="2"]:is(:hover, :focus-within)) [data-stop="2"] .corridor-town,
-.corridor:has(.stop-card[data-stop="3"]:is(:hover, :focus-within)) [data-stop="3"] .corridor-town {
-  color: var(--color-signal);
-}
-
-.stop-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 14px; }
-.stop-card { min-width: 0; padding-inline: var(--col-pad); }
-/* A short tick from the road down into each card. */
-.stop-card-inner { position: relative; height: 100%; display: flex; flex-direction: column; padding: clamp(20px, 1.9vw, 26px); border-radius: 16px; background: #fff; border: 1px solid #d8dee2; transition: border-color 280ms, transform 280ms, box-shadow 280ms; }
-.stop-card-inner::before { content: ""; position: absolute; left: 50%; top: -15px; width: 2px; height: 14px; margin-left: -1px; background: #c9d1d6; transition: background-color 280ms; }
-.stop-card:hover .stop-card-inner, .stop-card:focus-within .stop-card-inner { border-color: #a9b5bc; transform: translateY(-3px); box-shadow: 0 18px 34px -22px rgb(4 32 84 / .45); }
-.stop-card:hover .stop-card-inner::before, .stop-card:focus-within .stop-card-inner::before { background: var(--color-signal-deep); }
-
-.stop-index { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 11px; font-weight: 750; letter-spacing: .14em; color: var(--color-signal-deep); }
-.stop-tag { font-size: 10px; font-weight: 650; letter-spacing: .08em; text-transform: uppercase; color: #4d5a62; background: #eef1f3; border-radius: 999px; padding: 4px 9px; }
-.stop-city { margin-top: 12px; font-family: var(--font-display); font-variation-settings: "wdth" 86; font-size: clamp(20px, 1.75vw, 26px); font-weight: 800; line-height: 1.05; letter-spacing: -.035em; }
-.stop-call { display: flex; align-items: center; gap: 12px; min-height: 52px; margin-top: 18px; padding: 0 16px; border-radius: 12px; background: var(--color-ink); color: #fff; font-size: clamp(16px, 1.3vw, 19px); font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; transition: background-color 220ms, color 220ms; }
-.stop-call .icon { width: 18px; height: 18px; color: var(--color-signal); transition: color 220ms, transform 220ms; }
-.stop-call:hover { background: var(--color-signal); color: var(--color-ink); }
-.stop-call:hover .icon { color: var(--color-ink); transform: rotate(-14deg); }
-.stop-address { margin-top: 16px; font-style: normal; font-size: 13px; line-height: 1.75; color: #56636b; flex: 1; }
-.stop-directions { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; margin-top: 8px; font-size: 13px; font-weight: 650; width: fit-content; border-bottom: 1px solid transparent; transition: color 220ms, border-color 220ms; }
-.stop-directions .icon { width: 15px; height: 15px; transition: transform 220ms; }
-.stop-directions:hover { color: var(--color-signal-deep); border-bottom-color: var(--color-signal-deep); }
-.stop-directions:hover .icon { transform: translateX(3px); }
-
-/* Tablet: the road keeps all four towns, but the cards need two columns to
-   fit a phone number on one line — so they stop claiming to hang off it. */
-@media (max-width: 1023px) {
-  .stop-grid { grid-template-columns: repeat(2, 1fr); row-gap: 14px; }
-  .stop-card-inner::before { display: none; }
-}
-/* Mobile: the corridor turns vertical. The horizontal road can't carry four
-   town names at phone width, so the cards themselves become the stops on a
-   line running down the left — still south at the top, north at the bottom. */
-@media (max-width: 900px) {
-  .corridor-band { padding: 16px 0; border-radius: 16px; }
-  .corridor-track { display: none; }
-  .route-shield { width: 36px; height: 41px; font-size: 17px; }
-  .stop-grid { position: relative; grid-template-columns: 1fr; row-gap: 12px; margin-top: 16px; padding-left: 32px; }
-  .stop-grid::before { content: ""; position: absolute; left: 10px; top: 30px; bottom: 30px; width: 3px; border-radius: 3px; background: var(--color-signal-deep); }
-  .stop-card { position: relative; padding-inline: 0; }
-  .stop-card::before { content: ""; position: absolute; left: -29px; top: 24px; width: 17px; height: 17px; border-radius: 50%; background: #eceff1; border: 3px solid var(--color-signal-deep); }
-  .stop-card-inner { padding: 18px; }
-  .stop-city { font-size: 22px; }
-  .stop-call { font-size: 18px; }
-}
 .faq-section { background: #fff; }
 .faq-grid, .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(44px, 5.5vw, 96px); }
 .faq-grid > div > p:not(.section-kicker), .contact-grid > div > p:not(.section-kicker) { margin-top: 22px; font-size: 15px; line-height: 1.8; color: #5f6971; max-width: 42ch; }
@@ -1036,3 +915,23 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+/* ── Service area — one dispatch line, stated as reach rather than a map ── */
+.area-band { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding: clamp(24px, 3vw, 40px); border-radius: 22px; background: var(--color-ink); color: #fff; }
+.area-hours { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--color-signal); }
+.area-city { margin-top: 10px; font-family: var(--font-display); font-variation-settings: "wdth" 86; font-size: clamp(30px, 4vw, 52px); font-weight: 800; letter-spacing: -.04em; line-height: 1.05; }
+.area-city span { color: #97a3aa; }
+.area-call { display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 24px; border-radius: 4px; background: var(--color-signal); color: var(--color-ink); font-size: clamp(17px, 1.5vw, 21px); font-weight: 750; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; transition: background-color 180ms; }
+.area-call:hover { background: var(--color-signal-soft); }
+.area-points { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; padding: 0; list-style: none; }
+.area-points li { display: flex; align-items: center; gap: 12px; min-height: 62px; padding: 14px 20px; border: 1px solid #e3e8eb; border-radius: 14px; background: #fff; font-size: 14px; font-weight: 600; }
+.area-points .icon { width: 20px; height: 20px; color: var(--color-signal-deep); flex-shrink: 0; }
+@media (max-width: 900px) {
+  .area-band { flex-direction: column; align-items: flex-start; }
+  .area-points { grid-template-columns: 1fr; }
+}
+
+/* One dispatch line at the foot of the mobile menu. */
+.menu-dispatch { margin-top: 34px; padding: 20px; border-radius: 16px; background: var(--color-paper); border: 1px solid #e3e8eb; }
+.menu-dispatch p { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--color-ink-500); }
+.menu-dispatch .button { width: 100%; margin-top: 14px; font-size: 17px; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }

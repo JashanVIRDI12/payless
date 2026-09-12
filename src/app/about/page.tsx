@@ -5,12 +5,11 @@ import About from "@/components/About";
 import Trust from "@/components/Trust";
 import Reviews from "@/components/Reviews";
 import FinalCta from "@/components/FinalCta";
-import { COMPANY } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Towing the Sea-to-Sky Corridor since the 1970s — four dispatch locations, local operators and the equipment these roads ask for.",
+    "Payless Towing Service & Recovery — years of hands-on experience, a seasoned crew and the equipment Edmonton's roads ask for.",
   alternates: { canonical: "/about" },
 };
 
@@ -18,9 +17,9 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        kicker={`Serving the corridor since the ${COMPANY.since}`}
-        title="We know this road in every season."
-        lede={`Payless has worked the Sea-to-Sky between ${COMPANY.coverage} for decades — through black ice, washouts and the ordinary bad days that strand people a long way from home.`}
+        kicker="Proudly serving our community"
+        title="A legacy of getting the job done."
+        lede="Payless Towing Service & Recovery has built its reputation through years of hands-on experience, capable equipment, and a commitment to doing the job right. Today, we support drivers, businesses, and commercial operators with towing, recovery, transport, and roadside solutions they can count on."
         image={heroImage}
         alt="A red Payless Towing heavy wrecker with a blue boom, parked on a snowy lot under a clear blue sky"
         position="50% 68%"

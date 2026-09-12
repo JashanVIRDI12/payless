@@ -33,7 +33,7 @@ import { registerGsap } from "@/lib/motion";
 /** Grid rows that should land together rather than item by item. */
 const BATCHES: { sel: string; y: number; stagger: number }[] = [
   { sel: ".service-grid > li", y: 46, stagger: 0.09 },
-  { sel: ".stop-card", y: 40, stagger: 0.1 },
+  { sel: ".area-points > li", y: 30, stagger: 0.09 },
   { sel: ".faq-list details", y: 24, stagger: 0.06 },
 ];
 
@@ -42,7 +42,7 @@ const SINGLES =
   ".section-heading > p, .section-kicker, .check-list, " +
   ".text-call, .contact-urgent, " +
   ".fleet-note, .service-help, .reviews-source, " +
-  ".corridor-band";
+  ".area-band";
 
 /** Headings that clear a mask line by line as they scroll in. */
 const HEADINGS = ".section-heading h2";
@@ -202,30 +202,6 @@ export default function PageMotion({ children }: { children: ReactNode }) {
             }
           );
         });
-
-        /* ── 6. The corridor — Highway 99 draws itself south to north ── */
-        const corridor = scope.querySelector<HTMLElement>(".corridor");
-        if (corridor) {
-          const road = corridor.querySelector(".corridor-road");
-          const nodes = gsap.utils.toArray<HTMLElement>(".corridor-node", corridor);
-
-          gsap.set(nodes, { scale: 0, opacity: 0 });
-
-          const drive = gsap.timeline({
-            scrollTrigger: {
-              trigger: corridor,
-              start: "top 82%",
-              end: "bottom 55%",
-              scrub: 0.6,
-            },
-          });
-          if (road) drive.fromTo(road, { drawSVG: "0%" }, { drawSVG: "100%", ease: "none", duration: 1 }, 0);
-          // Each town lights up as the road reaches it.
-          nodes.forEach((node, i) => {
-            const at = nodes.length > 1 ? i / (nodes.length - 1) : 0;
-            drive.to(node, { scale: 1, opacity: 1, duration: 0.14, ease: "back.out(2)" }, Math.max(0, at - 0.06));
-          });
-        }
 
         /*
          * Everything this system animates now carries an inline start state,

@@ -1,6 +1,6 @@
-# Payless Auto Towing homepage
+# Payless Towing website
 
-A Next.js homepage for Payless Auto Towing, serving British Columbia’s Sea-to-Sky Corridor. The redesign leads with towing imagery, local dispatch, service choices and practical help.
+A Next.js site for Payless Towing Service & Recovery, serving Edmonton and surrounding areas. Copy comes from the owner's content document, "Payless Towing Website Content"; the dispatch number is the one lettered on their trucks.
 
 ## Run locally
 
@@ -16,16 +16,16 @@ On Windows with PowerShell script execution disabled, use npm.cmd in place of np
 
 ## Page structure
 
-- Nav and Hero: genuine brand logo, main call action, yellow-truck imagery and four dispatch numbers.
+- Nav and Hero: genuine brand logo, main call action, owner photography and the 24/7 dispatch number.
 - Trust and Services: insured service, local coverage and six towing/transport categories.
 - HowItWorks: what to have ready when calling dispatch.
 - About and Reviews: business background and a concise selection of existing testimonials.
-- Locations: local phone numbers, addresses, directions and a labeled schematic route.
+- Locations: the service area — Edmonton and surrounding areas, with long-distance towing beyond it.
 - Faq: accessible native details/summary controls.
 - Contact: scheduled transport enquiry form when connected; a call-for-quote panel otherwise.
 - FinalCta, Footer and MobileCallBar: continued access to calling and local dispatch.
 
-Business details live in src/lib/site.ts. Design tokens and responsive styles live in src/app/globals.css. Most sections are server components revealed by the shared PageMotion. Sections with their own choreography — Hero, Trust, HowItWorks, About and the fleet page's FleetShowroom — are client components marked `data-motion="self"`, which PageMotion skips so nothing is animated twice. SmoothScroll, Marquee, HeroShader and Cursor are retained but not mounted anywhere.
+Business details live in src/lib/site.ts (one dispatch line, six services, four fleet units). Design tokens and responsive styles live in src/app/globals.css. Most sections are server components revealed by the shared PageMotion. Sections with their own choreography — Hero, Trust, HowItWorks, About and the fleet page's FleetShowroom — are client components marked `data-motion="self"`, which PageMotion skips so nothing is animated twice. SmoothScroll, Marquee, HeroShader and Cursor are retained but not mounted anywhere.
 
 ## Enquiry delivery
 

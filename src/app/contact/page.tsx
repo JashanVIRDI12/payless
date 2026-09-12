@@ -5,12 +5,11 @@ import Locations from "@/components/Locations";
 import Contact from "@/components/Contact";
 import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
-import { COMPANY } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact & Dispatch Locations",
+  title: "Contact & 24/7 Dispatch",
   description:
-    "Four 24-hour dispatch offices across the Sea-to-Sky — North Vancouver, Squamish, Whistler and Pemberton. Call the one nearest you, or send details for a planned move.",
+    "One 24-hour dispatch line for Edmonton and surrounding areas. Call for towing, recovery or roadside assistance, or send the details for a planned move.",
   alternates: { canonical: "/contact" },
 };
 
@@ -18,9 +17,9 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        kicker="24 hours a day, every day"
-        title="Call the dispatch nearest you."
-        lede={`Four offices cover the corridor from ${COMPANY.coverage}. For anything urgent, phone is fastest — someone answers whatever the hour.`}
+        kicker="24 hours a day, 7 days a week"
+        title="Need assistance? We’re one call away."
+        lede="Towing, roadside assistance, heavy-duty recovery, or transport, our dispatch team is available 24/7 to understand your situation and arrange the right support."
         image={heroImage}
         alt="A black semi-tractor chained down on a low-deck trailer in a snowy yard, a heavy wrecker parked behind"
         position="60% 43%"

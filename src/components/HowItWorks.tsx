@@ -27,23 +27,23 @@ const STEPS: {
   {
     icon: "pin",
     title: "Tell us where you are.",
-    copy: "Have your road name, travel direction and a nearby landmark ready. Share the pickup and destination if you need a tow.",
+    copy: "Share your current location and destination, along with any nearby landmarks that can help our team identify where assistance is needed.",
     readyLabel: "Have ready",
-    ready: ["Road name", "Travel direction", "Nearby landmark", "Pickup & destination"],
+    ready: ["Current location", "Nearby landmark", "Pickup & destination", "Vehicle location details"],
   },
   {
     icon: "truck",
     title: "Tell us what happened.",
-    copy: "Your vehicle’s make, model and condition help dispatch assess the job. Mention any access restrictions or special transport needs.",
+    copy: "Give us a quick overview of your vehicle and the situation. These details help our dispatch team understand the job and send the right truck and equipment.",
     readyLabel: "Have ready",
-    ready: ["Make & model", "Vehicle condition", "Access restrictions", "Special transport needs"],
+    ready: ["Vehicle type & model", "Vehicle condition", "Nature of the problem", "Special towing requirements"],
   },
   {
     icon: "check",
-    title: "Confirm the next step.",
-    copy: "Ask dispatch about the right equipment, the estimated cost and current availability before arranging your service.",
-    readyLabel: "Ask dispatch about",
-    ready: ["The right equipment", "Estimated cost", "Current availability"],
+    title: "Confirm your service.",
+    copy: "Once we understand the situation, our dispatch team will recommend the right equipment, confirm availability, and walk you through the next steps before sending assistance.",
+    readyLabel: "Confirm with dispatch",
+    ready: ["Right equipment", "Service availability", "Estimated cost"],
   },
 ];
 
@@ -149,11 +149,15 @@ export default function HowItWorks() {
         <div className="section-heading">
           <div>
             <p className="section-kicker">From your first call</p>
-            <h2 id="how-heading">Let’s get you moving.</h2>
+            <h2 id="how-heading">
+              The right help starts
+              <br />
+              with the right details.
+            </h2>
           </div>
           <p>
-            A little information helps us understand your situation and arrange
-            the right assistance.
+            Share a few key details about your situation, and our team can
+            determine the equipment and support needed for the job.
           </p>
         </div>
 
@@ -197,16 +201,6 @@ export default function HowItWorks() {
             </li>
           ))}
         </ol>
-
-        <p className="route-tip">
-          <span className="route-shield" role="img" aria-label="Highway 99">
-            99
-          </span>
-          <span>
-            <strong>On Highway 99?</strong> Your direction of travel and the
-            nearest exit or landmark help pinpoint your location.
-          </span>
-        </p>
       </div>
     </section>
   );

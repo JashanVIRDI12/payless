@@ -10,16 +10,16 @@ import {
 } from "@/lib/motion";
 
 /**
- * Only places Payless states it serves: the corridor runs Deep Cove to
- * Lillooet, with dispatch at the four named towns. Nothing invented.
+ * Only what Payless states: Edmonton and surrounding areas, and the work the
+ * service list already covers. Nothing invented. (Not currently mounted.)
  */
 const PLACES = [
-  "Deep Cove",
-  "North Vancouver",
-  "Squamish",
-  "Whistler",
-  "Pemberton",
-  "Lillooet",
+  "Edmonton",
+  "Surrounding areas",
+  "24/7 dispatch",
+  "Heavy-duty recovery",
+  "Equipment transport",
+  "Long-distance towing",
 ];
 
 export default function Marquee() {

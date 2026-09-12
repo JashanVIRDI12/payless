@@ -1,6 +1,5 @@
 "use client";
 import { useActionState } from "react";
-import Link from "next/link";
 import { submitContact, type ContactState } from "@/app/actions";
 import { PRIMARY } from "@/lib/site";
 import Icon from "./Icon";
@@ -24,5 +23,5 @@ function EnquiryForm() {
 }
 
 export default function Contact({ enabled = false }: { enabled?: boolean }) {
-  return <section id="contact-form" className="contact-section section-space" aria-labelledby="contact-heading"><div className="site-container contact-grid"><div><p className="section-kicker">Plan your next move</p><h2 id="contact-heading">A scheduled haul?<br />Let’s talk details.</h2><p>Moving a vehicle across the province or getting equipment to site? Tell us what needs moving, where it’s going and when.</p><a className="text-call" href={`tel:${PRIMARY.tel}`}><Icon name="phone" />{PRIMARY.phone}</a><p className="contact-urgent">Need roadside help now? Call your <Link href="/contact#locations">nearest dispatch</Link> for immediate enquiries.</p></div>{enabled ? <EnquiryForm /> : <div className="quote-call-panel"><Icon name="truck" /><h3>Get a quote for your move.</h3><p>Have these details ready when you call:</p><ul className="check-list"><li><Icon name="check" />Pickup address and destination</li><li><Icon name="check" />Vehicle or equipment details</li><li><Icon name="check" />Your preferred date and time</li></ul><a href={`tel:${PRIMARY.tel}`} className="button button-dark"><Icon name="phone" />Call to discuss your move</a></div>}</div></section>;
+  return <section id="contact-form" className="contact-section section-space" aria-labelledby="contact-heading"><div className="site-container contact-grid"><div><p className="section-kicker">Plan your next move</p><h2 id="contact-heading">Have something heavy to move?<br />We’re up for it.</h2><p>Planning a vehicle tow, equipment haul, or specialized transport? Share the job details with our team and we’ll help determine the right equipment and approach for the move.</p><a className="text-call" href={`tel:${PRIMARY.tel}`}><Icon name="phone" />{PRIMARY.phone}</a><p className="contact-urgent">Need immediate towing or recovery? <a href={`tel:${PRIMARY.tel}`}>Call our 24/7 dispatch team.</a></p></div>{enabled ? <EnquiryForm /> : <div className="quote-call-panel"><Icon name="truck" /><h3>Get a quote for your move.</h3><p>Have these details ready when you call:</p><ul className="check-list"><li><Icon name="check" />Pickup &amp; destination</li><li><Icon name="check" />Vehicle or equipment details</li><li><Icon name="check" />Preferred date &amp; time</li></ul><a href={`tel:${PRIMARY.tel}`} className="button button-dark"><Icon name="phone" />Discuss your transport</a></div>}</div></section>;
 }

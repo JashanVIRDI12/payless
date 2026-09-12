@@ -10,9 +10,9 @@ import Icon, { type IconName } from "./Icon";
 import { registerGsap, revealHeading } from "@/lib/motion";
 
 const CREDENTIALS: { icon: IconName; label: string }[] = [
-  { icon: "shield", label: "Fully insured towing and recovery" },
-  { icon: "operator", label: "Highly trained operators" },
-  { icon: "award", label: "Authorized provider for leading auto service clubs" },
+  { icon: "operator", label: "A seasoned crew and experienced operators" },
+  { icon: "truck", label: "Diverse fleet and specialized heavy-duty equipment" },
+  { icon: "clock", label: "24/7 towing, recovery and roadside support" },
 ];
 
 /**
@@ -145,14 +145,15 @@ export default function About() {
           </div>
           <div className="about-intro">
             <p>
-              From the North Shore to Pemberton and beyond, Payless has helped
-              Sea-to-Sky drivers through breakdowns, difficult recoveries and
-              everyday vehicle moves for decades.
+              Payless Towing has spent years serving drivers, businesses, and
+              commercial operators throughout Edmonton and the surrounding
+              communities.
             </p>
             <p>
-              With tow trucks, flat decks and service vehicles across four
-              dispatch locations, we bring local knowledge and the equipment
-              your situation calls for.
+              Our roots in Alberta run deep. That local experience, combined
+              with a seasoned crew and diverse fleet, helps us understand the
+              demands of the road and respond with the right support for the
+              job.
             </p>
           </div>
         </div>
@@ -176,7 +177,7 @@ export default function About() {
               <br />
               Local people.
             </strong>
-            <span>Serving the corridor since the 1970s</span>
+            <span>Proudly serving Edmonton and area</span>
           </div>
         </div>
 
@@ -195,7 +196,7 @@ export default function About() {
             ))}
           </ul>
           <Link className="button button-dark about-cta" href="/contact">
-            Meet your local dispatch <Icon name="arrow" />
+            Talk to dispatch <Icon name="arrow" />
           </Link>
         </div>
       </div>

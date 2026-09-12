@@ -76,7 +76,7 @@ export default function CallButton({
       data-cursor="call"
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      aria-label={`Call Payless Auto Towing, ${PRIMARY.phone}`}
+      aria-label={`Call Payless Towing, ${PRIMARY.phone}`}
       className={`group inline-flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium tracking-wide transition-colors duration-300 md:px-6 ${VARIANTS[variant]} ${className}`}
     >
       <svg

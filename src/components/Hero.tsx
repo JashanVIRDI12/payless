@@ -5,7 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import heroImage from "@/assets/images/photo-wrecker-towing-semi.webp";
-import { LOCATIONS, PRIMARY } from "@/lib/site";
+import { COMPANY, PRIMARY } from "@/lib/site";
 import { EASE, registerGsap, releaseWords, stageLines } from "@/lib/motion";
 import Link from "next/link";
 import Icon from "./Icon";
@@ -60,8 +60,7 @@ export default function Hero() {
         intro
           .fromTo(q(".hero-lede"), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8 }, 0.92)
           .fromTo(q(".hero-actions > *"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8, stagger: 0.1 }, 1.04)
-          // The glass panel rises as one sheet, then its four offices fill in
-          // left to right — south to north, the same order as the corridor.
+          // The glass panel rises as one sheet, then the dispatch tile fills in.
           .fromTo(q(".dispatch-glass"), { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.9 }, 1.12)
           .fromTo(q(".dispatch-call"), { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.07 }, 1.3);
 
@@ -118,44 +117,41 @@ export default function Hero() {
         </div>
 
         <div className="hero-inner site-container">
-          <p className="availability"><span /> Here for you, 24 hours a day</p>
+          <p className="availability"><span /> 24/7 towing, recovery &amp; roadside support</p>
           <h1 id="hero-heading" className="hero-title">
-            <span className="hero-line" data-hero-line=""><span>Back on the road.</span></span>
-            <span className="hero-line hero-line-accent" data-hero-line=""><span>In good hands.</span></span>
+            <span className="hero-line" data-hero-line=""><span>Built for the heavy jobs.</span></span>
+            <span className="hero-line hero-line-accent" data-hero-line=""><span>Ready for every road.</span></span>
           </h1>
-          <p className="hero-lede">24/7 towing &amp; roadside assistance across the Sea-to-Sky. From your family car to a heavy-duty haul, help starts with one call.</p>
+          <p className="hero-lede">From roadside breakdowns to heavy-duty towing, complex recoveries, and specialized transport, Payless Towing has the equipment and experienced crew to get the job done. Serving {COMPANY.coverage} 24/7.</p>
           <div className="hero-actions">
-            <ArrowFillButton href={`tel:${PRIMARY.tel}`} btnText={`Call ${PRIMARY.phone}`} aria-label={`Call Payless Auto Towing, ${PRIMARY.phone}`} data-cursor="call" />
+            <ArrowFillButton href={`tel:${PRIMARY.tel}`} btnText="Call for assistance" aria-label={`Call Payless Towing, ${PRIMARY.phone}`} data-cursor="call" />
             <Link className="hero-ghost" href="/services">Explore our services <Icon name="arrow" /></Link>
           </div>
         </div>
 
         {/*
-         * Local dispatch, on the floor of the hero rather than under it. A
-         * group, not a <nav>: these are phone calls, not site navigation.
+         * The dispatch line on the floor of the hero rather than under it.
+         * One number, so it is a single tile rather than a row of offices.
          */}
         <div className="hero-dispatch site-container">
-          <div className="dispatch-glass" role="group" aria-labelledby="dispatch-glass-label">
-            <p className="dispatch-glass-intro" id="dispatch-glass-label">
+          <div className="dispatch-glass">
+            <p className="dispatch-glass-intro">
               <span className="dispatch-pulse" aria-hidden="true" />
               <span>
                 Need help now?
-                <strong>Call your local dispatch.</strong>
+                <strong>Our team is ready 24/7.</strong>
               </span>
             </p>
-            {LOCATIONS.map((location) => (
-              <a
-                key={location.city}
-                href={`tel:${location.tel}`}
-                className="dispatch-call"
-                data-cursor="call"
-                aria-label={`Call ${location.city} dispatch, ${location.phone}`}
-              >
-                <span className="dispatch-city">{location.city}</span>
-                <span className="dispatch-number">{location.phone}</span>
-                <Icon name="phone" />
-              </a>
-            ))}
+            <a
+              href={`tel:${PRIMARY.tel}`}
+              className="dispatch-call"
+              data-cursor="call"
+              aria-label={`Call Payless Towing dispatch, ${PRIMARY.phone}`}
+            >
+              <span className="dispatch-city">24/7 dispatch</span>
+              <span className="dispatch-number">{PRIMARY.phone}</span>
+              <Icon name="phone" />
+            </a>
           </div>
         </div>
       </div>

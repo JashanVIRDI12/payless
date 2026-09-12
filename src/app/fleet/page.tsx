@@ -10,7 +10,7 @@ import { PRIMARY } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Our Fleet",
   description:
-    "Flat decks, roadside units, heavy-duty wreckers and equipment floats — the equipment Payless runs across the Sea-to-Sky Corridor and what each one is for.",
+    "Flatbed and tilt decks, roadside units, heavy-duty wreckers and equipment transport — the equipment Payless runs across Edmonton and surrounding areas, and what each one is for.",
   alternates: { canonical: "/fleet" },
 };
 
@@ -18,9 +18,9 @@ export default function FleetPage() {
   return (
     <>
       <PageHero
-        kicker="Equipment"
-        title="The right truck for the job."
-        lede="Sending the wrong equipment costs everyone time. Here is what we run, and the kind of work each one is built for."
+        kicker="Our fleet"
+        title="The equipment behind every recovery."
+        lede="Every job demands the right combination of power, equipment, and control. Our diverse fleet includes heavy-duty wreckers, recovery equipment, flatbed and tilt deck trucks, and specialized transport solutions built to take on demanding work safely and efficiently."
         image={heroImage}
         alt="A red heavy rotator wrecker with its boom raised, on display at an indoor truck show"
         position="60% 60%"
@@ -45,7 +45,7 @@ export default function FleetPage() {
           <p className="fleet-note">
             Equipment is described by what it does rather than by unit counts or
             models. For availability on a specific job,{" "}
-            <Link href="/contact">talk to your nearest dispatch</Link>.
+            <Link href="/contact">talk to dispatch</Link>.
           </p>
         </div>
       </section>

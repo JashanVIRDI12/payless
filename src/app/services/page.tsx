@@ -11,7 +11,7 @@ import { PRIMARY } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Towing & Roadside Services",
   description:
-    "Towing, recovery, roadside assistance and transport across the Sea-to-Sky Corridor — light, medium and heavy duty, plus equipment and long-haul moves.",
+    "Towing, recovery, roadside assistance and transport across Edmonton and surrounding areas — light, medium and heavy duty, plus equipment and long-distance moves.",
   alternates: { canonical: "/services" },
 };
 
@@ -20,8 +20,8 @@ export default function ServicesPage() {
     <>
       <PageHero
         kicker="Towing, recovery & transport"
-        title="Whatever you're driving, whatever went wrong."
-        lede="Six ways we help drivers and operators along Highway 99 — from a lock-out on the shoulder to a semi that needs lifting out of a lane."
+        title="The right equipment for every job."
+        lede="Towing is only part of what we do. Our capabilities cover roadside assistance, heavy-duty recovery, specialized transport, accident clean-up, and more, backed by experienced operators and equipment built for demanding jobs."
         image={heroImage}
         alt="An orange Payless heavy wrecker with a blue recovery boom, parked in front of a grey service building"
         position="60% 20%"
@@ -44,16 +44,16 @@ export default function ServicesPage() {
         <div className="site-container faq-grid">
           <div>
             <p className="section-kicker">Before you call</p>
-            <h2 id="services-next-heading">What to have<br />ready.</h2>
-            <p>The more dispatch knows up front, the faster the right truck gets sent.</p>
+            <h2 id="services-next-heading">A few details help us<br />send the right truck.</h2>
+            <p>Having the right information ready helps our dispatch team understand the job, choose the appropriate equipment, and arrange your service efficiently.</p>
             <a className="text-call" href={`tel:${PRIMARY.tel}`}><Icon name="phone" />{PRIMARY.phone}</a>
           </div>
           <ul className="check-list check-list-lg">
-            <li><Icon name="check" />Where you are — road, direction of travel, nearest exit or landmark</li>
-            <li><Icon name="check" />Your vehicle&rsquo;s make, model and condition</li>
-            <li><Icon name="check" />Whether it is electric or all-wheel drive</li>
-            <li><Icon name="check" />Where it needs to go</li>
-            <li><Icon name="check" />Any access restrictions at either end</li>
+            <li><Icon name="check" /><strong>Your location:</strong> road, direction of travel, or nearest landmark</li>
+            <li><Icon name="check" /><strong>Vehicle details:</strong> type, make, model, and approximate size</li>
+            <li><Icon name="check" /><strong>Vehicle condition:</strong> breakdown, accident, stuck, or other issue</li>
+            <li><Icon name="check" /><strong>Pickup &amp; destination:</strong> where the vehicle is and where it needs to go</li>
+            <li><Icon name="check" /><strong>Access details:</strong> any space, clearance, or site restrictions</li>
           </ul>
         </div>
       </section>

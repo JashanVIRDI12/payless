@@ -386,7 +386,7 @@ export default function Trust() {
       <div className="site-container">
         <div className="section-heading why-heading">
           <div>
-            <p className="section-kicker">Why drivers call Payless</p>
+            <p className="section-kicker">Why drivers choose Payless</p>
             <h2 id="trust-heading" aria-label="Ready when you call.">
               <span className="why-title-line" aria-hidden="true">
                 <span className="why-word-mask">
@@ -411,16 +411,17 @@ export default function Trust() {
             </h2>
           </div>
           <p className="why-lede">
-            One connected corridor from {COMPANY.coverage}, covered by local
-            crews and the equipment each job actually calls for.
+            A seasoned crew, diverse fleet, and specialized heavy-duty equipment
+            give us the capability to take on everything from everyday roadside
+            needs to demanding recovery operations, with 24/7 support.
           </p>
         </div>
 
         <div className="why-corridor" aria-hidden="true">
           <div className="why-corridor-labels">
-            <span>Deep Cove</span>
-            <span className="why-corridor-caption">One connected corridor</span>
-            <span>Lillooet</span>
+            <span>Edmonton</span>
+            <span className="why-corridor-caption">Local and long-distance</span>
+            <span>Beyond the city</span>
           </div>
           <div className="why-corridor-track">
             <span className="why-corridor-fill" />
@@ -470,7 +471,7 @@ export default function Trust() {
                     </svg>
                   </div>
                   <h3>Day or night</h3>
-                  <p>24-hour emergency service, every day of the year.</p>
+                  <p>24-hour towing, recovery and roadside support, every day of the year.</p>
                 </div>
               </div>
             </div>
@@ -506,8 +507,8 @@ export default function Trust() {
                       ))}
                     </svg>
                   </div>
-                  <h3>Four local dispatches</h3>
-                  <p>North Vancouver, Squamish, Whistler and Pemberton.</p>
+                  <h3>Edmonton and beyond</h3>
+                  <p>Serving {COMPANY.coverage}, with long-distance towing available.</p>
                 </div>
               </div>
             </div>
@@ -528,8 +529,8 @@ export default function Trust() {
                       <path className="why-check" d="M21 37l8 8 15-17" />
                     </svg>
                   </div>
-                  <h3>Fully insured</h3>
-                  <p>Care for you and for your vehicle.</p>
+                  <h3>Handled with care</h3>
+                  <p>Experienced operators and equipment for secure loading and transport.</p>
                 </div>
               </div>
             </div>
@@ -559,7 +560,7 @@ export default function Trust() {
                     ))}
                   </div>
                   <h3>Small cars. Big hauls.</h3>
-                  <p>Light, medium and heavy-duty towing and transport.</p>
+                  <p>Light, medium and heavy-duty towing, with 50 and 60 ton wrecker capability.</p>
                 </div>
               </div>
             </div>
