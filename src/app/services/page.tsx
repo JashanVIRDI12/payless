@@ -49,11 +49,11 @@ export default function ServicesPage() {
             <a className="text-call" href={`tel:${PRIMARY.tel}`}><Icon name="phone" />{PRIMARY.phone}</a>
           </div>
           <ul className="check-list check-list-lg">
-            <li><Icon name="check" /><strong>Your location:</strong> road, direction of travel, or nearest landmark</li>
-            <li><Icon name="check" /><strong>Vehicle details:</strong> type, make, model, and approximate size</li>
-            <li><Icon name="check" /><strong>Vehicle condition:</strong> breakdown, accident, stuck, or other issue</li>
-            <li><Icon name="check" /><strong>Pickup &amp; destination:</strong> where the vehicle is and where it needs to go</li>
-            <li><Icon name="check" /><strong>Access details:</strong> any space, clearance, or site restrictions</li>
+            <li><Icon name="check" /><span><strong>Your location:</strong> Road, direction of travel, or nearest landmark</span></li>
+            <li><Icon name="check" /><span><strong>Vehicle details:</strong> Type, make, model, and approximate size</span></li>
+            <li><Icon name="check" /><span><strong>Vehicle condition:</strong> Breakdown, accident, stuck, or other issue</span></li>
+            <li><Icon name="check" /><span><strong>Pickup &amp; destination:</strong> Where the vehicle is and where it needs to go</span></li>
+            <li><Icon name="check" /><span><strong>Access details:</strong> Any space, clearance, or site restrictions</span></li>
           </ul>
         </div>
       </section>

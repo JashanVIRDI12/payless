@@ -120,75 +120,42 @@ export const SERVICES: readonly Service[] = [
   },
 ] as const;
 
-export type Review = {
-  name: string;
+export type Testimonial = {
+  /** How the owner's document attributes the quote — a role, not a name. */
+  role: string;
   quote: string;
-  /** Every review shown on their site carries five stars. */
-  rating: 5;
 };
 
 /**
- * Verbatim from the Google reviews published on paylesstowing.ca, typos and
- * all — editing a testimonial is putting words in someone's mouth.
- *
- * The site states "Based on 70 reviews" but does not publish the numeric
- * average, so no aggregate score is claimed anywhere, and no review structured
- * data is emitted (self-serving review markup on a business's own site is
- * against Google's guidelines).
+ * Word for word from the owner's content document, attributed by role exactly
+ * as supplied. The document gives no star ratings, so none are shown, and no
+ * review structured data is emitted.
  */
-export const REVIEW_COUNT = 70;
-
-/**
- * Order matters: the first entry is set as the large pull quote, so it needs
- * to be a short one. The second is given the wide card directly beneath it.
- */
-export const REVIEWS: readonly Review[] = [
+export const TESTIMONIALS: readonly Testimonial[] = [
   {
-    name: "Natalie York",
-    rating: 5,
+    role: "Commercial Truck Driver",
     quote:
-      "Dan is a legend! Unlocked my car for me and had exceptional customer service - put a huge smile on my face!",
+      "Our truck broke down at the worst possible time, and the Payless crew made the whole situation much easier. They arrived prepared, explained what needed to happen, and handled the tow professionally.",
   },
   {
-    name: "Kirsten Walker",
-    rating: 5,
+    role: "Construction Customer",
     quote:
-      "Outstanding towing experience! Dan went above and beyond in saving our day when we broke down in -10 on the highway to whis. Great communication (never heard anything from bcaa). This is a man with so much passion and pride for his clients, job and company. The world needs more people like dan!",
+      "We needed heavy equipment moved between job sites and the entire process was straightforward. The team knew exactly what equipment was required and handled the transport with care.",
   },
   {
-    name: "Gord Lyster",
-    rating: 5,
+    role: "Roadside Assistance Customer",
     quote:
-      "First class, top shelf service from our attendee. DAN was knowledgeable and personable … and very efficient. Thank you. We will highly recommend you.",
+      "Great experience when I needed roadside help. Communication was clear, the response was quick, and the operator was friendly and professional throughout.",
   },
   {
-    name: "Luke Arsenault",
-    rating: 5,
+    role: "Fleet Operator",
     quote:
-      "Dan showed up faster then BCAA said. Super nice guy, went above & beyond to help me out. Highly recommend!",
+      "We called Payless for a difficult heavy-duty recovery. Their crew came equipped for the job and handled a challenging situation with confidence. Very impressed with how everything was managed.",
   },
   {
-    name: "leannegr",
-    rating: 5,
+    role: "Long-Distance Towing Customer",
     quote:
-      "We need more people in the world like Dan at Payless! Couldn't be kinder or more helpful. Got my van out of a really tricky spot (had broken down in the most awkward place at the bottom of my icy, slippery driveway). Great to meet someone with so much professionalism and love for the job.",
-  },
-  {
-    name: "Niket Kalra",
-    rating: 5,
-    quote:
-      "Dan picked me up bright and early. Safely loaded the car and made sure I got home safe. Couldn't ask for better service and customer experience.",
-  },
-  {
-    name: "Nicholas Helt",
-    rating: 5,
-    quote:
-      "Great experience with Dan! Guy knows his stuff very well and helped us make an educated decision on a tough a situation. Not to mention just how friendly and kind the guy is! 12/10 would recommend.",
-  },
-  {
-    name: "Philip G",
-    rating: 5,
-    quote: "Dan was amazing and saved me a huge headache from my truck problems",
+      "Professional service from the first call to the final delivery. Our vehicle had to be transported a considerable distance, and the team kept everything organized and made the process easy for us.",
   },
 ] as const;
 

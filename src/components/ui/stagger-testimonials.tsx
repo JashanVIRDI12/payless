@@ -3,11 +3,11 @@
 // Adapted from the stagger-testimonials component supplied by the user.
 // Stable review identities and accessible controls replace demo data/random keys.
 import { useState, type CSSProperties, type KeyboardEvent } from "react";
-import { ArrowLeft, ArrowRight, Quote, Star } from "lucide-react";
-import { REVIEWS } from "@/lib/site";
+import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
+import { TESTIMONIALS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const reviews = [REVIEWS[0], REVIEWS[2], REVIEWS[3], REVIEWS[5], REVIEWS[6]];
+const reviews = TESTIMONIALS;
 
 export function StaggerTestimonials() {
   const [active, setActive] = useState(0);
@@ -21,11 +21,11 @@ export function StaggerTestimonials() {
       {reviews.map((review, index) => {
         const position = ((index - active + reviews.length + 2) % reviews.length) - 2;
         const center = position === 0;
-        return <article key={review.name} className={cn("testimonial-card", center && "is-center")} aria-hidden={!center} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${reviews.length}`} style={{ "--position": position, "--rotation": center ? "0deg" : position % 2 ? "3deg" : "-3deg", "--lift": center ? "-35px" : position % 2 ? "25px" : "7px", zIndex: center ? 4 : 3 - Math.abs(position) } as CSSProperties}>
-          {!center && <button type="button" className="testimonial-card-select" onClick={() => move(position)} tabIndex={-1} aria-label={`Read ${review.name}'s review`} />}
-          <div className="testimonial-card-top"><Quote size={27} strokeWidth={1.4} /><span aria-label="5 out of 5 stars" role="img">{Array.from({ length: 5 }, (_, i) => <Star key={i} size={12} fill="currentColor" strokeWidth={0} />)}</span></div>
+        return <article key={review.role} className={cn("testimonial-card", center && "is-center")} aria-hidden={!center} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${reviews.length}`} style={{ "--position": position, "--rotation": center ? "0deg" : position % 2 ? "3deg" : "-3deg", "--lift": center ? "-35px" : position % 2 ? "25px" : "7px", zIndex: center ? 4 : 3 - Math.abs(position) } as CSSProperties}>
+          {!center && <button type="button" className="testimonial-card-select" onClick={() => move(position)} tabIndex={-1} aria-label={`Read testimonial ${index + 1}`} />}
+          <div className="testimonial-card-top"><Quote size={27} strokeWidth={1.4} /></div>
           <blockquote>“{review.quote}”</blockquote>
-          <div className="testimonial-author"><span className="testimonial-initial" aria-hidden="true">{review.name.charAt(0)}</span><div><strong>{review.name}</strong><span>Payless customer</span></div></div>
+          <div className="testimonial-author"><span className="testimonial-initial" aria-hidden="true">{review.role.charAt(0)}</span><div><strong>{review.role}</strong><span>Payless customer</span></div></div>
         </article>;
       })}
     </div>
