@@ -25,7 +25,7 @@ export default function ContactPage() {
         position="60% 43%"
       />
       <Locations />
-      <Contact enabled={Boolean(process.env.CONTACT_WEBHOOK_URL)} />
+      <Contact />
       <Faq />
       <FinalCta />
     </>

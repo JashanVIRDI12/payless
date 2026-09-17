@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { COMPANY } from "@/lib/site";
 
+export const dynamic = "force-static";
+
 /*
  * Vercel preview deployments must never be indexed — they would compete with
  * the live site in search. Vercel also sends a noindex header on previews;

@@ -1,0 +1,25 @@
+# This is a static Next.js export. Upload it beside index.html.
+# Each page has its own index.html; keep the exported .txt navigation files.
+DirectoryIndex index.html
+Options -Indexes -MultiViews
+ErrorDocument 404 /404.html
+
+<IfModule mod_mime.c>
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType text/plain .txt
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+  # Revalidate page and navigation payloads after every deployment.
+  <FilesMatch "\.(html|txt|xml)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

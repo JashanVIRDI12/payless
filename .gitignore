@@ -16,6 +16,10 @@
 # next.js
 /.next/
 /out/
+/public_html/
+/public_html.zip
+/cpanel-upload.zip
+/cpanel-upload.zip.tmp
 
 # production
 /build

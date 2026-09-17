@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { COMPANY } from "@/lib/site";
 
+export const dynamic = "force-static";
+
 /*
  * URLs use the canonical domain, matching metadataBase and the canonical tags,
  * not whichever host served the build. Add new routes here when pages are

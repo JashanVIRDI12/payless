@@ -20,7 +20,7 @@ export default function Home() {
       <Reviews />
       <Locations />
       <Faq />
-      <Contact enabled={Boolean(process.env.CONTACT_WEBHOOK_URL)} />
+      <Contact />
       <FinalCta />
     </>
   );
