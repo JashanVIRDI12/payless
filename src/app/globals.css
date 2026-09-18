@@ -85,11 +85,27 @@
    mirror the header rules below — keep them in step if the header changes. */
 :root { --nav-h: 89px; --bar-h: 0px; }
 .towing-hero { position: relative; background: var(--color-ink); color: #fff; }
-.hero-stage { position: relative; display: flex; flex-direction: column; min-height: max(620px, calc(100svh - var(--nav-h) - var(--bar-h))); overflow: hidden; }
+/* The track is the scrub length: 480vh gives the 452 frames roughly 8px of
+   scroll each on a laptop, dense enough to read as continuous rather than as
+   a flipbook. The stage sticks below the header and above the mobile call
+   bar — the component measures this element to derive the scrub range, so
+   the two can never drift apart. */
+.hero-track { position: relative; height: 480vh; }
+.hero-stage { position: sticky; top: var(--nav-h); display: flex; flex-direction: column; height: calc(100svh - var(--nav-h) - var(--bar-h)); overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; overflow: hidden; }
 .hero-bg-layer { position: absolute; inset: -9% 0; }
-.hero-photo { object-fit: cover; object-position: 62% 54%; }
-.hero-scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(97deg, #03102cf7 0%, #03102ce3 24%, #03102ca1 44%, #03102c45 60%, #03102c00 74%), linear-gradient(0deg, #03102ce6 0%, #03102c52 15%, #03102c00 36%); }
+/* Centred, not 62%/54%: the canvas cover-centres every frame, so the poster
+   has to frame frame 0 identically or the hand-off would jump. */
+.hero-photo { object-fit: cover; object-position: center; }
+.hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 320ms; will-change: transform; }
+.hero-canvas.is-live { opacity: 1; }
+/* Wind blur at the edges of the frame, opened up by scroll velocity. */
+/* Reaches only as far as the copy does. The old version carried 97% navy
+   across the left half and 63% at the midpoint, which hid the truck and made
+   the whole frame read as a dark filter rather than as footage. It now falls
+   off to nothing by 58%, so the right half of every frame is the footage at
+   full brightness. */
+.hero-scrim { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(98deg, #03102cc9 0%, #03102c85 22%, #03102c30 42%, #03102c00 58%), linear-gradient(0deg, #03102cbd 0%, #03102c47 14%, #03102c00 32%); }
 .hero-sweep { position: absolute; top: -20%; bottom: -20%; left: 0; width: 40%; opacity: 0; pointer-events: none; filter: blur(7px); background: linear-gradient(102deg, #fc500000 0%, #fc50002b 40%, #ff6a2247 52%, #fc500024 64%, #fc500000 100%); }
 /* The copy takes the free space above the dispatch panel and centres in it. */
 .hero-inner { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: clamp(40px, 7vh, 88px) clamp(28px, 4vh, 48px); }
@@ -198,7 +214,10 @@
   .hero-stage { min-height: max(460px, calc(100svh - var(--nav-h) - var(--bar-h))); }
   /* Holds the wrecker's cab in the narrow portrait slice of the photo. */
   .hero-photo { object-position: 77% 50%; }
-  .hero-scrim { background: linear-gradient(180deg, #03102cd1 0%, #03102c59 22%, #03102c40 40%, #03102cde 66%, #03102cfa 100%); }
+  /* The mid-band carries the lede, which on a phone lands over the chrome
+     and the sky rather than over the truck. Held just high enough to keep
+     the smallest copy on the page readable. */
+  .hero-scrim { background: linear-gradient(180deg, #03102cab 0%, #03102c3d 24%, #03102c4f 44%, #03102cc2 68%, #03102ce8 100%); }
   .hero-inner { justify-content: flex-end; padding-block: 28px 22px; }
   .hero-title { font-size: clamp(37px, 10.2vw, 58px); margin-top: 18px; }
   .hero-lede { margin-top: 16px; max-width: 36ch; font-size: 14px; line-height: 1.7; }
@@ -225,6 +244,16 @@
   .dispatch-city { grid-area: city; letter-spacing: .1em; }
   .dispatch-number { grid-area: num; font-size: clamp(16px, 4.6vw, 19px); }
   .dispatch-call .icon { position: static; grid-area: icon; width: 22px; height: 22px; padding: 5px; margin: 0; }
+}
+/* Short windows of any width: the hero stage is exactly the visible viewport
+   now (it has to be, to stick), so anything that does not fit is clipped
+   rather than pushing the section taller. Same triage as the phone rule
+   below — the lede is the first thing a stranded driver does not need. */
+@media (min-width: 901px) and (max-height: 660px) {
+  .hero-lede { display: none; }
+  .hero-inner { padding-block: 22px 16px; }
+  .hero-title { margin-top: 14px; font-size: clamp(38px, 4.6vw, 62px); }
+  .hero-actions { margin-top: 24px; }
 }
 /* Short phones: trim to what a stranded driver needs, so the whole panel still
    lands above the call bar. The services link stays reachable from the menu. */
@@ -935,3 +964,81 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 .menu-dispatch { margin-top: 34px; padding: 20px; border-radius: 16px; background: var(--color-paper); border: 1px solid #e3e8eb; }
 .menu-dispatch p { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--color-ink-500); }
 .menu-dispatch .button { width: 100%; margin-top: 14px; font-size: 17px; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+
+
+/* ── Hero film furniture ──
+   Captions, rail, timecode and end card all belong to the scroll sequence, not
+   to the hero proper. They are held at opacity 0 and faded up by the timeline
+   once the opening copy has left, so the first screen stays exactly as
+   composed — headline, lede, dispatch panel — and the film's own UI only
+   appears when there is film to watch. */
+.hero-film-ui { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 3; opacity: 0; pointer-events: none; }
+/* Text protection that travels with the captions rather than sitting over the
+   whole frame — the film stays bright and only the bottom third, where the
+   words actually are, is held down. A real element, not a pseudo, so the
+   timeline can take it away when the captions go. */
+.hero-beats-scrim { position: absolute; right: 0; bottom: 0; left: 0; height: 62%; background: linear-gradient(0deg, #03102cd4 0%, #03102c87 26%, #03102c2b 52%, #03102c00 100%); }
+
+.hero-beats { position: absolute; left: 50%; bottom: clamp(96px, 16vh, 184px); width: min(100% - 96px, 1320px); transform: translateX(-50%); }
+.hero-beat { position: absolute; left: 0; bottom: 0; }
+.hero-beat-lead { font-family: var(--font-display); font-variation-settings: "wdth" 84; font-size: clamp(32px, 4.7vw, 76px); font-weight: 800; line-height: 1.03; letter-spacing: -.045em; max-width: 15ch; }
+.hero-beat-body { margin-top: 18px; max-width: 44ch; color: #ccd4d9; font-size: clamp(14px, 1.1vw, 17px); line-height: 1.7; opacity: 0; }
+
+/* The lane line, stood on its end. */
+.hero-rail { position: absolute; right: clamp(16px, 2.6vw, 46px); top: 50%; width: 4px; height: min(42vh, 380px); transform: translateY(-50%); }
+.hero-rail-track, .hero-rail-fill { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 7px; }
+.hero-rail-track span, .hero-rail-fill span { flex: 1; border-radius: 2px; }
+.hero-rail-track span { background: rgb(255 255 255 / .34); box-shadow: 0 1px 3px rgb(3 16 44 / .4); }
+.hero-rail-fill span { background: var(--color-signal); }
+/* Clipped, not scaled: scaling would squash the dashes instead of filling them. */
+.hero-rail-fill { clip-path: inset(0% 0% 100% 0%); }
+
+.hero-hud { position: absolute; left: clamp(24px, 4vw, 56px); top: clamp(22px, 4vh, 46px); display: flex; align-items: center; gap: 14px; font-size: 11px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: #dbe4f2; text-shadow: 0 1px 3px rgb(3 16 44 / .55); font-variant-numeric: tabular-nums; }
+.hero-tc b { color: #fff; font-weight: 700; }
+.hero-load { width: 62px; height: 2px; overflow: hidden; background: rgb(255 255 255 / .32); transition: opacity 700ms; }
+.hero-load-fill { display: block; height: 100%; background: var(--color-signal); transform: scaleX(0); transform-origin: 0 50%; }
+.hero-load.is-done { opacity: 0; }
+
+/* End card, riding in on the film's own logo lockup. */
+.hero-end { position: absolute; left: 50%; bottom: clamp(76px, 13vh, 148px); z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 14px; transform: translateX(-50%); opacity: 0; }
+.hero-end-call { display: inline-flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 28px; border-radius: 4px; background: var(--color-signal); color: var(--color-ink); font-size: 16px; font-weight: 750; letter-spacing: -.015em; white-space: nowrap; transition: background-color 180ms; }
+.hero-end-call:hover { background: var(--color-signal-soft); }
+.hero-end-call .icon { width: 20px; height: 20px; }
+.hero-end-note { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #93a4c0; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 900px) {
+  /* Shorter scrub: a phone's viewport is tall, so 480vh of track would be a
+     very long thumb journey before the first line of real content. */
+  .hero-track { height: 340vh; }
+  .hero-beats { width: calc(100% - 44px); bottom: clamp(104px, 18vh, 170px); }
+  .hero-beat-lead { font-size: clamp(30px, 8.4vw, 46px); max-width: 12ch; }
+  .hero-beat-body { margin-top: 14px; font-size: 14px; }
+  .hero-rail { right: 14px; width: 3px; height: 30vh; }
+  .hero-hud { left: 22px; top: 20px; font-size: 10px; }
+  .hero-end { bottom: clamp(72px, 12vh, 120px); }
+}
+
+/* Reduced motion: the hero exactly as it was before the film — poster, copy,
+   dispatch panel, no track, no scrub. The player is never constructed, so not
+   one of the 452 frames is requested. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-track { height: auto; }
+  .hero-stage { position: relative; top: 0; height: auto; min-height: max(620px, calc(100svh - var(--nav-h) - var(--bar-h))); }
+  .hero-canvas, .hero-film-ui, .hero-end { display: none; }
+}
+
+/* ── Scroll cue ──
+   The hero reads as a still photograph until you scroll, so the film needs one
+   affordance saying it is there. It arrives last in the load sequence and
+   leaves the moment the reader acts on it. The travelling dot is a CSS
+   animation, so the global reduced-motion rule stills it without any JS. */
+.hero-scroll-cue { position: absolute; right: clamp(24px, 4vw, 56px); bottom: clamp(122px, 17vh, 190px); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 12px; opacity: 0; pointer-events: none; }
+.hero-scroll-cue span { font-size: 10px; font-weight: 650; letter-spacing: .22em; text-transform: uppercase; color: #dbe4f2; text-shadow: 0 1px 3px rgb(3 16 44 / .55); writing-mode: vertical-rl; }
+.hero-scroll-cue i { position: relative; width: 1px; height: 54px; background: rgb(255 255 255 / .42); overflow: hidden; }
+.hero-scroll-cue i::after { content: ""; position: absolute; inset-inline: -1px; top: 0; height: 18px; background: var(--color-signal); animation: hero-cue 1.9s cubic-bezier(.6, 0, .4, 1) infinite; }
+@keyframes hero-cue { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(300%); } }
+
+@media (max-width: 900px) {
+  /* A thumb already knows the page scrolls, and the call bar owns this corner. */
+  .hero-scroll-cue { display: none; }
+}

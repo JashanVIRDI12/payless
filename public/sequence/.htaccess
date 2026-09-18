@@ -1,0 +1,17 @@
+# The scroll-film frames. 904 files that are only ever replaced wholesale, by
+# re-running scripts/build-sequence.mjs — a given path's bytes never change
+# under it. Without this, a returning visitor re-downloads ~27MB every time,
+# which is the difference between the section feeling instant and feeling
+# broken. Safe because the build script rewrites the whole directory: if the
+# footage changes, the frame count and therefore the URLs change with it.
+<IfModule mod_headers.c>
+  <FilesMatch "\.webp$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# These are already-compressed WebP. Running them through mod_deflate spends
+# CPU on every request to make them fractionally larger.
+<IfModule mod_deflate.c>
+  SetEnvIfNoCase Request_URI \.webp$ no-gzip dont-vary
+</IfModule>
