@@ -9,7 +9,13 @@ import { SplitText } from "gsap/SplitText";
 import { COMPANY, PRIMARY } from "@/lib/site";
 import { EASE, onScrollVelocity, registerGsap, releaseWords, stageLines } from "@/lib/motion";
 import { SEQUENCE, frameSrc } from "@/lib/sequence";
-import { FrameSequence, pickTier } from "@/lib/frame-sequence";
+import {
+  FrameSequence,
+  canDecodeOffThread,
+  loadStride,
+  pickTier,
+} from "@/lib/frame-sequence";
+import { dismissFilmLoader, setFilmProgress } from "@/lib/film-loader";
 import Link from "next/link";
 import Icon from "./Icon";
 import ArrowFillButton from "@/components/ui/arrow-fill-button";
@@ -41,8 +47,8 @@ const FILM_OUT = 0.9;
 /** The opening copy is gone by here. */
 const COPY_OUT = 0.15;
 /**
- * Where the footage starts fading to black for its logo lockup — frame 390 of
- * 451, so film progress 0.865, and the film runs over 0..FILM_OUT of the
+ * Where the footage starts fading to black for its logo lockup — source frame
+ * 390 of 451, so film progress 0.865, and the film runs over 0..FILM_OUT of the
  * scroll. The end card fades up on exactly that fade, so the button is already
  * there when the logo resolves instead of chasing it. Scrub smoothing means
  * anything later reads as a lag.
@@ -141,7 +147,7 @@ export default function Hero() {
       /*
        * The film. Object form so the callback can branch on width — and so it
        * never runs under reduced motion, where the reader gets the poster and
-       * the copy and not one of the 452 frames is requested.
+       * the copy and not one of the 226 frames is requested.
        */
       media.add(
         {
@@ -170,6 +176,7 @@ export default function Hero() {
           const scrubEnd = () => `bottom top+=${stickTop() + stage.offsetHeight}`;
 
           let seq: FrameSequence | null = null;
+          let releaseGate: (() => void) | null = null;
           let target = 0;
           let current = 0;
           let cancelled = false;
@@ -187,20 +194,35 @@ export default function Hero() {
           });
 
           /*
-           * Unlike a section further down the page, the hero cannot wait for a
-           * scroll trigger to warm up — it is already on screen. But it must
-           * not race the poster either: that image is the LCP element. So the
-           * loader starts on the first idle callback after mount, by which
-           * time the poster has had the network to itself.
+           * The film is built immediately rather than on an idle callback.
+           * <FilmLoader> is holding the page while these frames arrive, so
+           * every millisecond spent waiting for idle is a millisecond the
+           * reader spends looking at a progress bar. The poster is a separate
+           * request Next has already issued from the markup, and it is small
+           * enough that eight frame fetches alongside it do not move the LCP.
+           *
+           * No off-thread decode means no guarantee against a main-thread
+           * decode mid-scroll, which is the whole stutter this engine exists
+           * to avoid — so on a browser without it the film is never built and
+           * the section falls back to the poster.
            */
           const startLoading = () => {
             if (cancelled || seq) return;
+            if (!canDecodeOffThread()) {
+              scope.dataset.film = "off";
+              dismissFilmLoader();
+              return;
+            }
+
             const tier = pickTier(SEQUENCE.tiers);
             seq = new FrameSequence({
               canvas,
               frames: SEQUENCE.frames,
               src: (i) => frameSrc(tier.width, i),
+              frameWidth: tier.width,
+              frameHeight: tier.height,
               blend: true,
+              stride: loadStride(),
               onFirstPaint: () => {
                 // The canvas paints the same frame 0, cover-centred the same
                 // way, so this cross-fade has nothing to cross — it is there
@@ -210,26 +232,33 @@ export default function Hero() {
                 canvas.classList.add("is-live");
               },
               onLoadProgress: (loaded, total) => {
-                if (loadbar) {
-                  loadbar.style.transform = `scaleX(${loaded / total})`;
-                }
+                const share = loaded / total;
+                setFilmProgress(share);
+                if (loadbar) loadbar.style.transform = `scaleX(${share})`;
                 if (loaded === total) {
                   scope.querySelector(".hero-load")?.classList.add("is-done");
                 }
               },
             });
+
+            /*
+             * The loader is released on decoded pixels, not on bytes. `ready`
+             * only reports the fetch; the first window still has to come back
+             * from createImageBitmap, and letting the reader scroll into a
+             * canvas that has not painted yet would undo the point of holding
+             * them. `live` is set by the engine's first successful paint.
+             */
+            const gate = window.setInterval(() => {
+              if (cancelled) return;
+              if (seq?.ready && seq.live) {
+                window.clearInterval(gate);
+                dismissFilmLoader();
+              }
+            }, 120);
+            releaseGate = () => window.clearInterval(gate);
           };
 
-          // Safari only grew requestIdleCallback recently, so the timeout is a
-          // real fallback rather than a formality.
-          let cancelIdle: () => void;
-          if (typeof window.requestIdleCallback === "function") {
-            const handle = window.requestIdleCallback(startLoading, { timeout: 1800 });
-            cancelIdle = () => window.cancelIdleCallback(handle);
-          } else {
-            const handle = window.setTimeout(startLoading, 700);
-            cancelIdle = () => window.clearTimeout(handle);
-          }
+          startLoading();
 
           /*
            * Render on the ticker rather than in onUpdate. A scroll event can
@@ -252,12 +281,18 @@ export default function Hero() {
             }
 
             if (timecode) {
-              const exact = film * (SEQUENCE.frames - 1);
-              const seconds = exact / SEQUENCE.fps;
+              /*
+               * Reported against the master's 30fps, not the 15fps that ships.
+               * Only every 2nd frame is shipped, so the shipped index has to be
+               * scaled back up or the readout would claim the cut is half as
+               * long as it is and count frames to 14.
+               */
+              const exact = film * (SEQUENCE.frames - 1) * SEQUENCE.step;
+              const seconds = exact / SEQUENCE.sourceFps;
               timecode.textContent =
                 `${String(Math.floor(seconds / 60)).padStart(2, "0")}:` +
                 `${String(Math.floor(seconds % 60)).padStart(2, "0")}:` +
-                `${String(Math.floor(exact % SEQUENCE.fps)).padStart(2, "0")}`;
+                `${String(Math.floor(exact % SEQUENCE.sourceFps)).padStart(2, "0")}`;
             }
           };
           gsap.ticker.add(tick);
@@ -269,10 +304,21 @@ export default function Hero() {
            * the settled layout rather than the one being torn down, which is
            * the classic way a scrubbed canvas ends up drawing into a box that
            * no longer matches the element.
+           *
+           * Debounced, and deliberately so: re-measuring the store invalidates
+           * every decoded frame, because they were cropped for a geometry that
+           * no longer exists. Doing that on each event of a drag-resize would
+           * throw away and rebuild the window dozens of times on the way to the
+           * size the reader actually wanted. A phone's address bar collapsing
+           * fires this too, which is the common case.
            */
+          let resizeTimer = 0;
           const onResize = () => {
-            seq?.resize();
-            ScrollTrigger.refresh();
+            window.clearTimeout(resizeTimer);
+            resizeTimer = window.setTimeout(() => {
+              seq?.resize();
+              ScrollTrigger.refresh();
+            }, 180);
           };
           window.addEventListener("resize", onResize);
 
@@ -358,7 +404,7 @@ export default function Hero() {
           /*
            * The end card rides in on the film's own logo lockup — and has to be
            * up for as long as that lockup is. The footage finishes resolving it
-           * at frame 420 of 451, which is film progress 0.93 and therefore
+           * at source frame 420 of 451, which is film progress 0.93 and therefore
            * scroll LOGO_IN. Arriving any later than that leaves a long stretch
            * of logo on screen with nothing on it you can press.
            */
@@ -390,7 +436,8 @@ export default function Hero() {
 
           return () => {
             cancelled = true;
-            cancelIdle();
+            releaseGate?.();
+            window.clearTimeout(resizeTimer);
             stopVelocity?.();
             gsap.ticker.remove(tick);
             window.removeEventListener("resize", onResize);

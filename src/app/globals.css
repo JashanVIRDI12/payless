@@ -14,7 +14,12 @@
   --font-sans: var(--font-geist-sans), Arial, sans-serif;
 }
 @layer base {
-  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-tap-highlight-color: transparent; }
+  /* The gutter is reserved at all times, not only while something is holding
+     the page, so taking the scrollbar away for the film loader cannot shift
+     the layout underneath it by the width of the bar and shift it back on the
+     way out. */
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-tap-highlight-color: transparent; scrollbar-gutter: stable; }
+  html.is-scroll-locked, html.is-scroll-locked body { overflow: hidden; }
   body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); font-synthesis: none; }
   h1, h2, h3, p, figure { margin: 0; }
   a, button, summary { touch-action: manipulation; }
@@ -85,11 +90,13 @@
    mirror the header rules below — keep them in step if the header changes. */
 :root { --nav-h: 89px; --bar-h: 0px; }
 .towing-hero { position: relative; background: var(--color-ink); color: #fff; }
-/* The track is the scrub length: 480vh gives the 452 frames roughly 8px of
-   scroll each on a laptop, dense enough to read as continuous rather than as
-   a flipbook. The stage sticks below the header and above the mobile call
-   bar — the component measures this element to derive the scrub range, so
-   the two can never drift apart. */
+/* The track is the scrub length: 480vh gives the 226 frames roughly 17px of
+   scroll each on a laptop. The cross-dissolve interpolates between them, so
+   what reads as continuous motion is the blend, not the frame rate — the
+   track is sized for how long the film should take to scroll, not for how
+   many frames there are. The stage sticks below the header and above the
+   mobile call bar; the component measures this element to derive the scrub
+   range, so the two can never drift apart. */
 .hero-track { position: relative; height: 480vh; }
 .hero-stage { position: sticky; top: var(--nav-h); display: flex; flex-direction: column; height: calc(100svh - var(--nav-h) - var(--bar-h)); overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; overflow: hidden; }
@@ -1020,12 +1027,64 @@ h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em;
 
 /* Reduced motion: the hero exactly as it was before the film — poster, copy,
    dispatch panel, no track, no scrub. The player is never constructed, so not
-   one of the 452 frames is requested. */
+   one of the 226 frames is requested.
+
+   `[data-film="off"]` is the same fallback reached a different way: a browser
+   with no createImageBitmap cannot decode frames off the main thread, and the
+   engine will not paint a sequence it would have to decode during the scroll.
+   Hero sets the attribute instead of building the player. */
 @media (prefers-reduced-motion: reduce) {
   .hero-track { height: auto; }
   .hero-stage { position: relative; top: 0; height: auto; min-height: max(620px, calc(100svh - var(--nav-h) - var(--bar-h))); }
   .hero-canvas, .hero-film-ui, .hero-end { display: none; }
 }
+.towing-hero[data-film="off"] .hero-track { height: auto; }
+.towing-hero[data-film="off"] .hero-stage { position: relative; top: 0; height: auto; min-height: max(620px, calc(100svh - var(--nav-h) - var(--bar-h))); }
+.towing-hero[data-film="off"] .hero-canvas,
+.towing-hero[data-film="off"] .hero-film-ui,
+.towing-hero[data-film="off"] .hero-end { display: none; }
+
+/* ── Film loader ──────────────────────────────────────────────────────────
+   The card held over the page while the hero film's frames arrive. It carries
+   the brand lockup, a real progress readout, and — because this is a towing
+   company and someone may be reading it from a hard shoulder — a live
+   dispatch number, so the one thing that matters is never behind the wait. */
+.film-loader { position: fixed; inset: 0; z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(34px, 6vh, 58px); padding: 24px; background: radial-gradient(120% 90% at 50% 34%, #0a2f6b 0%, var(--color-ink) 52%, #02143a 100%); color: #fff; overflow: hidden; touch-action: none; clip-path: inset(0% 0% 0% 0%); will-change: clip-path;
+  /* Failsafe. If the bundle never runs, nothing else will ever take this card
+     down — so it takes itself down. Normal operation removes the element from
+     the DOM seconds before this reaches its final keyframe. */
+  animation: film-loader-failsafe 9s linear forwards; }
+/* The beacon pass from the hero, slowed down and set to repeat: the same
+   gesture the film opens on, so the wait belongs to the same piece. */
+.film-loader::after { content: ""; position: absolute; top: -20%; bottom: -20%; left: 0; width: 42%; pointer-events: none; filter: blur(8px); background: linear-gradient(102deg, #fc500000 0%, #fc500024 40%, #ff6a223d 52%, #fc50001f 64%, #fc500000 100%); animation: film-loader-sweep 3.4s cubic-bezier(.45,0,.2,1) infinite; }
+.film-loader-mark { position: relative; z-index: 1; }
+
+.film-loader-meter { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 12px 16px; width: min(420px, 78vw); }
+.film-loader-label { grid-row: 2; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #93a4c0; }
+.film-loader-count { grid-row: 2; grid-column: 2; display: flex; align-items: baseline; gap: 2px; font-family: var(--font-display); font-variation-settings: "wdth" 84; font-size: 13px; font-weight: 700; letter-spacing: .04em; color: #fff; font-variant-numeric: tabular-nums; }
+.film-loader-count i { font-style: normal; color: #93a4c0; }
+.film-loader-rail { grid-column: 1 / -1; grid-row: 1; height: 2px; background: rgb(255 255 255 / .16); overflow: hidden; }
+/* scaleX on a 2px bar, so the fill is a compositor transform rather than a
+   width the layout has to resolve 226 times. */
+.film-loader-fill { display: block; height: 100%; background: var(--color-signal); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+
+.film-loader-call { position: absolute; z-index: 1; left: 50%; bottom: clamp(26px, 5vh, 46px); transform: translateX(-50%); display: inline-flex; align-items: baseline; gap: 10px; min-height: 44px; padding: 0 4px; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #93a4c0; white-space: nowrap; transition: color 180ms; }
+.film-loader-call strong { font-size: 15px; letter-spacing: -.01em; text-transform: none; color: #fff; font-variant-numeric: tabular-nums; }
+.film-loader-call:hover { color: #dbe4f2; }
+.film-loader-call:hover strong { color: var(--color-signal-soft); }
+
+/* Hidden, not detached: this node belongs to React, which will try to remove
+   it itself when the home page unmounts. Taking it out from under React earns
+   a removeChild on a node that no longer has that parent. */
+.film-loader.is-gone { display: none; }
+
+@keyframes film-loader-sweep { 0% { transform: translateX(-120%); opacity: 0; } 22% { opacity: 1; } 78% { opacity: 1; } 100% { transform: translateX(340%); opacity: 0; } }
+@keyframes film-loader-failsafe { 0%, 94% { opacity: 1; visibility: visible; } 100% { opacity: 0; visibility: hidden; } }
+
+/* Never shown: under reduced motion the film is never built, so there is
+   nothing to wait for. The component removes itself too — this is only here so
+   the card cannot paint in the gap before hydration. */
+@media (prefers-reduced-motion: reduce) { .film-loader { display: none; } }
 
 /* ── Scroll cue ──
    The hero reads as a still photograph until you scroll, so the film needs one

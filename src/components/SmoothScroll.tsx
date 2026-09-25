@@ -9,6 +9,7 @@ import {
   prefersReducedMotion,
   registerGsap,
 } from "@/lib/motion";
+import { registerScroller } from "@/lib/scroll-lock";
 
 /**
  * Lenis driven by the GSAP ticker so ScrollTrigger and the scroll position
@@ -31,6 +32,9 @@ export default function SmoothScroll() {
     });
 
     lenis.on("scroll", ScrollTrigger.update);
+    // The film loader holds the page still while it fills, and it has no way
+    // to reach this instance otherwise.
+    registerScroller(lenis);
 
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
@@ -72,6 +76,7 @@ export default function SmoothScroll() {
     return () => {
       document.removeEventListener("click", onClick);
       stopVelocity?.();
+      registerScroller(null);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };
