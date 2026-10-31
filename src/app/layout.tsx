@@ -52,7 +52,15 @@ export const metadata: Metadata = {
   },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
+  verification: { google: "5LKzMGzBiDpz_ECrUe98WwmTBXihMZXOMSnc55np4Ng" },
 };
+
+/*
+ * Google Tag Manager container, supplied by the SEO team. GA4 (G-0J5PN1RG2V)
+ * is configured inside this container — do not add gtag.js separately, or
+ * every pageview is counted twice.
+ */
+const GTM_ID = "GTM-MT8VJ4P3";
 
 export const viewport: Viewport = {
   themeColor: "#042054",
@@ -114,6 +122,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <head>
         {/*
+          Google Tag Manager — kept first in <head>, as GTM requires.
+          @next/third-parties' GoogleTagManager only loads after hydration.
+        */}
+        {/* eslint-disable-next-line @next/next/next-script-for-ga */}
+        <script
+          dangerouslySetInnerHTML={{ __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');` }}
+        />
+        {/*
           Flags "motion is coming" before first paint so the hero can hold its
           opening pose instead of flashing the finished state during hydration.
           The attribute is dropped after 2.6s, so a blocked bundle or a thrown
@@ -129,6 +145,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         />
       </head>
       <body className="min-h-full bg-paper text-ink">
+        {/* Google Tag Manager (noscript) — immediately after <body>. */}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-paper"

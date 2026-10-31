@@ -74,7 +74,7 @@ export async function submitContact(
         phone,
         email,
         message,
-        source: "paylesstowing.ca homepage",
+        source: "paylestowing.ca homepage",
         receivedAt: new Date().toISOString(),
       }),
     });

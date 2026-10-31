@@ -19,7 +19,7 @@ Upload the generated **`cpanel-upload.zip`**, extracting its contents directly i
 
 Follow [CPANEL-DEPLOY.md](CPANEL-DEPLOY.md), including the one-time repair of existing `_next` directory permissions. The reported Apache `AH00529` error means Apache cannot check `_next/static/.htaccess`; changing application code cannot repair permissions already on the server.
 
-After upload, run `npm run verify:deployment -- https://paylestowing.ca` (the domain in the supplied Apache log). The source's canonical domain is currently `paylesstowing.ca`; confirm the intended canonical domain separately before changing business metadata.
+After upload, run `npm run verify:deployment -- https://paylestowing.ca`. The canonical domain is `paylestowing.ca` (one `s`), confirmed by the owner; `paylesstowing.ca` (two `s`) is a different site on another server.
 
 This project uses `output: "export"`. The production files are in `out/`; serve them as static files. `next start` requires a server build and does not serve this export.
 
@@ -57,13 +57,14 @@ The current build is a static export. The previous Node.js deployment workflow b
 1. Push this folder to a Git repository. This folder (`payless/`) is the project root — if the repository also contains its parent directory, set Vercel's Root Directory to `payless`.
 2. In Vercel choose Add New → Project and import the repository. Next.js is detected automatically; leave the build command and output directory at their defaults.
 3. Optional: add `CONTACT_WEBHOOK_URL` under Settings → Environment Variables (see `.env.example`), then redeploy — the pages are prerendered, so a variable added later only takes effect on the next build.
-4. When ready to go live, add `paylesstowing.ca` under Settings → Domains.
+4. When ready to go live, add `paylestowing.ca` under Settings → Domains.
 
 Worth knowing:
 
 - Node 20.9 or newer is required and pinned in `package.json` `engines`.
 - Preview deployments are kept out of search: `robots.txt` disallows everything when `VERCEL_ENV` is `preview`, on top of Vercel's own noindex header for previews.
-- Canonical tags, `sitemap.xml` and Open Graph URLs all use `https://paylesstowing.ca` (`COMPANY.url` in `src/lib/site.ts`). Until that domain points at Vercel they point at the current live site, which is intended — a staging copy on `*.vercel.app` will not be indexed as a duplicate.
+- Canonical tags, `robots.txt`, `sitemap.xml`, Open Graph URLs and the JSON-LD all use `https://paylestowing.ca` (`COMPANY.url` in `src/lib/site.ts`). Until that domain points at Vercel they point at the current live site, which is intended — a staging copy on `*.vercel.app` will not be indexed as a duplicate.
+- On cPanel, `public/.htaccess` 301-redirects `http://` and `www.` to `https://paylestowing.ca`. Sitemap URLs carry the trailing slash so each returns 200 rather than a redirect.
 - cPanel response headers are set in `public/.htaccess`. Other hosts need equivalent header configuration.
 - Vercel builds on Linux, where file names are case-sensitive. Imports have been checked against on-disk case; keep them exact when adding files on Windows.
 

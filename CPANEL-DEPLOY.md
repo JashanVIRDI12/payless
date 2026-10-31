@@ -33,10 +33,9 @@ AH00529 continues with 755/644 in place, send hosting support this request:
 > security context restricting Apache. Preserve the cPanel document-root
 > ownership/group configuration. Confirm a real CSS file returns HTTP 200.
 
-The log's domain is **paylestowing.ca** (one `s`), while the source's canonical
-metadata currently says **paylesstowing.ca** (two `s` characters). Verify the
-deployment on the former; confirm the intended canonical domain before changing
-metadata. The permission repair is independent of that naming difference.
+The canonical domain is **paylestowing.ca** (one `s`), confirmed by the owner.
+Canonical tags, `robots.txt`, `sitemap.xml` and Open Graph URLs all use it.
+**paylesstowing.ca** (two `s` characters) is a different site on another server.
 
 ## Build the upload
 

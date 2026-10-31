@@ -20,7 +20,7 @@ import type { StaticImageData } from "next/image";
 export const COMPANY = {
   name: "Payless Towing",
   legalName: "Payless Towing Service & Recovery",
-  url: "https://paylesstowing.ca",
+  url: "https://paylestowing.ca",
   city: "Edmonton",
   province: "Alberta",
   /** Their stated coverage, verbatim: "Edmonton and surrounding areas". */
